@@ -9,3 +9,9 @@ Creating a StackOverflow-like forum, using Grails technologies.
 
  - Link for downloading : https://www.jetbrains.com/idea/#chooseYourEdition (choose Ultimate)
  - Link for getting a student license : https://www.jetbrains.com/student/
+ 
+## Travis integration
+
+ - Add repository : ppa:gradle/grails
+ - apt-get update
+ - apt-get install grails-[version]
