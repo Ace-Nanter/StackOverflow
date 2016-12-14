@@ -3,9 +3,9 @@ package stackoverflow
 import grails.test.mixin.*
 import spock.lang.*
 
-@TestFor(QuestionController)
-@Mock(Question)
-class QuestionControllerSpec extends Specification {
+@TestFor(AnswerController)
+@Mock(Answer)
+class AnswerControllerSpec extends Specification {
 
     def populateValidParams(params) {
         assert params != null
@@ -21,8 +21,8 @@ class QuestionControllerSpec extends Specification {
             controller.index()
 
         then:"The model is correct"
-            !model.questionList
-            model.questionCount == 0
+            !model.answerList
+            model.answerCount == 0
     }
 
     void "Test the create action returns the correct model"() {
@@ -30,7 +30,7 @@ class QuestionControllerSpec extends Specification {
             controller.create()
 
         then:"The model is correctly created"
-            model.question!= null
+            model.answer!= null
     }
 
     void "Test the save action correctly persists an instance"() {
@@ -38,25 +38,25 @@ class QuestionControllerSpec extends Specification {
         when:"The save action is executed with an invalid instance"
             request.contentType = FORM_CONTENT_TYPE
             request.method = 'POST'
-            def question = new Question()
-            question.validate()
-            controller.save(question)
+            def answer = new Answer()
+            answer.validate()
+            controller.save(answer)
 
         then:"The create view is rendered again with the correct model"
-            model.question!= null
+            model.answer!= null
             view == 'create'
 
         when:"The save action is executed with a valid instance"
             response.reset()
             populateValidParams(params)
-            question = new Question(params)
+            answer = new Answer(params)
 
-            controller.save(question)
+            controller.save(answer)
 
         then:"A redirect is issued to the show action"
-            response.redirectedUrl == '/question/show/1'
+            response.redirectedUrl == '/answer/show/1'
             controller.flash.message != null
-            Question.count() == 1
+            Answer.count() == 1
     }
 
     void "Test that the show action returns the correct model"() {
@@ -68,11 +68,11 @@ class QuestionControllerSpec extends Specification {
 
         when:"A domain instance is passed to the show action"
             populateValidParams(params)
-            def question = new Question(params)
-            controller.show(question)
+            def answer = new Answer(params)
+            controller.show(answer)
 
         then:"A model is populated containing the domain instance"
-            model.question == question
+            model.answer == answer
     }
 
     void "Test that the edit action returns the correct model"() {
@@ -84,11 +84,11 @@ class QuestionControllerSpec extends Specification {
 
         when:"A domain instance is passed to the edit action"
             populateValidParams(params)
-            def question = new Question(params)
-            controller.edit(question)
+            def answer = new Answer(params)
+            controller.edit(answer)
 
         then:"A model is populated containing the domain instance"
-            model.question == question
+            model.answer == answer
     }
 
     void "Test the update action performs an update on a valid domain instance"() {
@@ -98,28 +98,28 @@ class QuestionControllerSpec extends Specification {
             controller.update(null)
 
         then:"A 404 error is returned"
-            response.redirectedUrl == '/question/index'
+            response.redirectedUrl == '/answer/index'
             flash.message != null
 
         when:"An invalid domain instance is passed to the update action"
             response.reset()
-            def question = new Question()
-            question.validate()
-            controller.update(question)
+            def answer = new Answer()
+            answer.validate()
+            controller.update(answer)
 
         then:"The edit view is rendered again with the invalid instance"
             view == 'edit'
-            model.question == question
+            model.answer == answer
 
         when:"A valid domain instance is passed to the update action"
             response.reset()
             populateValidParams(params)
-            question = new Question(params).save(flush: true)
-            controller.update(question)
+            answer = new Answer(params).save(flush: true)
+            controller.update(answer)
 
         then:"A redirect is issued to the show action"
-            question != null
-            response.redirectedUrl == "/question/show/$question.id"
+            answer != null
+            response.redirectedUrl == "/answer/show/$answer.id"
             flash.message != null
     }
 
@@ -130,23 +130,23 @@ class QuestionControllerSpec extends Specification {
             controller.delete(null)
 
         then:"A 404 is returned"
-            response.redirectedUrl == '/question/index'
+            response.redirectedUrl == '/answer/index'
             flash.message != null
 
         when:"A domain instance is created"
             response.reset()
             populateValidParams(params)
-            def question = new Question(params).save(flush: true)
+            def answer = new Answer(params).save(flush: true)
 
         then:"It exists"
-            Question.count() == 1
+            Answer.count() == 1
 
         when:"The domain instance is passed to the delete action"
-            controller.delete(question)
+            controller.delete(answer)
 
         then:"The instance is deleted"
-            Question.count() == 0
-            response.redirectedUrl == '/question/index'
+            Answer.count() == 0
+            response.redirectedUrl == '/answer/index'
             flash.message != null
     }
 }
