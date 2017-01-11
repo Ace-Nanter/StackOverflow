@@ -14,4 +14,11 @@ class Question extends Post {
         answers nullable: true
         comments nullable: true
     }
+
+    // Default en bdd
+    /*
+    static mapping = {
+        views defaultValue: "0"
+        resolved defaultValue: "false"
+    }*/
 }
