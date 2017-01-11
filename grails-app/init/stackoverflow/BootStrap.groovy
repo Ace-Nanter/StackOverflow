@@ -1,5 +1,7 @@
 package stackoverflow
 
+import grails.util.Environment
+
 class BootStrap {
 
     def init = { servletContext ->
@@ -21,7 +23,25 @@ class BootStrap {
         assert User.count() == 1
         assert Role.count() == 3
         assert UserRole.count() == 1
+
+        // Stub data
+        if (Environment.current == Environment.DEVELOPMENT
+                || Environment.current == Environment.TEST) {
+            new Question(text: "Quel est le sens de la vie ?",
+                    vote: 0,
+                    created: new Date(),
+                    edited: new Date(),
+                    title: "Test 1",
+                    views: 0,
+                    resolved: false).save(failOnError: true)
+        }
+
     }
     def destroy = {
     }
+
+    // TODO : créer un stub de données. Penser à mettre un if(mode = dev)
+
+
+
 }

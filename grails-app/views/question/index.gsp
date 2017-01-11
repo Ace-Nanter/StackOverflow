@@ -2,10 +2,15 @@
 <html>
     <head>
         <meta name="layout" content="main" />
+        <!--
         <g:set var="entityName" value="${message(code: 'question.label', default: 'Question')}" />
+
+        -->
         <title><g:message code="default.list.label" args="[entityName]" /></title>
     </head>
     <body>
+
+
         <a href="#list-question" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
         <div class="nav" role="navigation">
             <ul>
@@ -20,8 +25,9 @@
             </g:if>
             <f:table collection="${questionList}" />
 
-            <div class="pagination">
+            <div>
                 <g:paginate total="${questionCount ?: 0}" />
+                <g:message code="default.list.label" args="${questionCount ?: -1}" />
             </div>
         </div>
     </body>
