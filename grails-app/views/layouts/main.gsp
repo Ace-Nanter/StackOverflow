@@ -26,7 +26,9 @@
         </div>
     </div>
 
-    <g:layoutBody/>
+    <div class="container body-content">
+        <g:layoutBody/>
+    </div>
 
     <div class="footer" role="contentinfo"></div>
 

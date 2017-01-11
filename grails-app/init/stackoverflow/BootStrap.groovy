@@ -27,11 +27,12 @@ class BootStrap {
         // Stub data
         if (Environment.current == Environment.DEVELOPMENT
                 || Environment.current == Environment.TEST) {
-            new Question(text: "Quel est le sens de la vie ?",
+
+            new Question(text: "Everything is said in the title : what is the meaning of life ?",
                     vote: 0,
                     created: new Date(),
                     edited: new Date(),
-                    title: "Test 1",
+                    title: "What is the meaning of life ?",
                     views: 0,
                     resolved: false).save(failOnError: true)
         }

@@ -9,25 +9,32 @@
         <title><g:message code="default.list.label" args="[entityName]" /></title>
     </head>
     <body>
+        <div>
+            <div id="list-question" class="content scaffold-list" role="main">
 
+                <div class="jumbotron">
+                    <h1 class="text-center">Questions</h1>
+                </div>
 
-        <a href="#list-question" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-        <div class="nav" role="navigation">
-            <ul>
-                <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-                <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-            </ul>
-        </div>
-        <div id="list-question" class="content scaffold-list" role="main">
-            <h1><g:message code="default.list.label" args="[entityName]" /></h1>
-            <g:if test="${flash.message}">
-                <div class="message" role="status">${flash.message}</div>
-            </g:if>
-            <f:table collection="${questionList}" />
+                <g:if test="${flash.message}">
+                    <div class="message" role="status">${flash.message}</div>
+                </g:if>
 
-            <div>
-                <g:paginate total="${questionCount ?: 0}" />
-                <g:message code="default.list.label" args="${questionCount ?: -1}" />
+                <table class="table table-bordered">
+                    <tbody>
+                        <g:each in="${questionList}" var="q">
+                            <tr>
+                                <td>
+                                    <g:link action="show" id="${q.id}">${q.title}</g:link>
+                                </td>
+                            </tr>
+                        </g:each>
+                    </tbody>
+                </table>
+
+                <div>
+                    <g:paginate total="${questionCount ?: 0}" />
+                </div>
             </div>
         </div>
     </body>
