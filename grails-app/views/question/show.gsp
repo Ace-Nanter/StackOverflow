@@ -20,7 +20,7 @@
             <p>${question.text}</p>
         </div>
         <hr/>
-        <g:form action="/answer/create" method="post">
+        <g:form action="/answer/save" method="post">
             <g:textField name="text" value="" />
             <g:submitButton name="submitButton" value="Submit" />
         </g:form>

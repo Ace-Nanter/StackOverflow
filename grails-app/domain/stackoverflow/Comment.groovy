@@ -5,16 +5,17 @@ class Comment extends Post {
     static belongsTo = [answer: Answer, question: Question]
 
     static constraints = {
-
         // Personalized validator to be associated to a question OR an answer.
-        answer(validator: {val, obj ->
-            if(question != null)
-                return false
+        answer( nullable: true,
+                validator: {val, obj ->
+            if(obj.question != null)
+                return true
         })
 
-        question(validator: {val, obj ->
-            if(answer != null)
-                return false
+        question( nullable: true,
+                validator: {val, obj ->
+            if(obj.answer != null)
+                return true
         })
     }
 }

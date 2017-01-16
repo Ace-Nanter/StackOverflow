@@ -10,7 +10,7 @@ class BootStrap {
         def anonymousRole = new Role(authority: 'ROLE_ANONYMOUS').save()
 
         def testUser = new User(username: 'me', password: 'password').save()
-       // def anonymousUser = new User (username:'anonymous', password: '1234').save()
+        // def anonymousUser = new User (username:'anonymous', password: '1234').save()
 
         UserRole.create testUser, adminRole
         //UserRole.create anonymousUser, anonymousRole
@@ -28,13 +28,39 @@ class BootStrap {
         if (Environment.current == Environment.DEVELOPMENT
                 || Environment.current == Environment.TEST) {
 
-            new Question(text: "Everything is said in the title : what is the meaning of life ?",
+
+            Question question = new Question(text: "Everything is said in the title : what is the meaning of life ?",
                     vote: 0,
                     created: new Date(),
                     edited: new Date(),
                     title: "What is the meaning of life ?",
                     views: 0,
-                    resolved: false).save(failOnError: true)
+                    resolved: false)
+
+            Answer answer = new Answer(text: "Everything is said in the title : what is the meaning of life ?",
+                    vote: 0,
+                    created: new Date(),
+                    edited: new Date(),
+                    question: question)
+
+            Comment commentQuest = new Comment(text: "Are you serious ?",
+                    vote: 0,
+                    created: new Date(),
+                    edited: new Date(),
+                    question: question,
+                    anwser: null)
+
+            Comment commentAnsw = new Comment(text: "Go back to Google+, faggot",
+                    vote: 0,
+                    created: new Date(),
+                    edited: new Date(),
+                    question: null,
+                    anwser: answer)
+
+            question.save("failOnError": true)
+            answer.save("failOnError": true)
+            commentQuest.save("failOnError": true)
+            commentAnsw.save("failOnError": true)
         }
 
     }
