@@ -21,7 +21,17 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav"></ul>
-<!-- TODO : Login part -->
+                <!-- Login part -->
+                <div class="nav navbar-nav navbar-right">
+                    <sec:ifNotLoggedIn>
+                        <g:link class="navbar-brand" url="/user/create">${message(code: 'default.user.signup', default: 'Sign up')}</g:link>
+                        <g:link class="navbar-brand" url="/login">${message(code: 'default.user.signin', default: 'Sign in')}</g:link>
+                    </sec:ifNotLoggedIn>
+                    <sec:ifLoggedIn>
+                        <g:link class="navbar-brand" url="/logout">${message(code: 'default.user.signout', default: 'Sign out')}</g:link>
+                    </sec:ifLoggedIn>
+
+                </div>
             </div>
         </div>
     </div>
