@@ -1,5 +1,7 @@
 package stackoverflow
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal
+
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 import grails.plugin.springsecurity.annotation.Secured
@@ -24,14 +26,16 @@ class AnswerController {
         respond new Answer(params)
     }
 
-    @Secured(['ROLE_ANONYMOUS'])
+    @Secured(['ROLE_USER'])
     @Transactional
     def addAnswer(){
+        User activeUser = (User)getAuthenticatedUser()
         Answer answer = new Answer(
                 text: params.text,
                 vote: 0,
                 created: new Date(),
-                question: Question.get(params.idQuestion)
+                question: Question.get(params.idQuestion),
+                user: activeUser
         )
 
         if (answer == null) {

@@ -7,6 +7,8 @@ import groovy.transform.ToString
 @ToString(includes='username', includeNames=true, includePackage=false)
 class User implements Serializable {
 
+	static hasMany = [questions: Question, answers: Answer ,comments: Comment]
+
 	private static final long serialVersionUID = 1
 
 	transient springSecurityService
