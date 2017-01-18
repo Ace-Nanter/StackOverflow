@@ -40,11 +40,17 @@ class BootStrap {
             Answer answer = new Answer(text: "Everything is said in the title : what is the meaning of life ?",
                     vote: 0,
                     created: new Date(),
+                    edited: new Date(1484751600000),
+                    question: question)
+
+            Answer answer2 = new Answer(text: "The answer below wasn't a very serious answer.",
+                    vote: 0,
+                    created: new Date(),
                     edited: new Date(),
                     question: question)
 
             Comment commentQuest = new Comment(text: "Are you serious ?",
-                    vote: 0,
+                    vote: 5,
                     created: new Date(),
                     edited: new Date(),
                     question: question,
@@ -53,12 +59,13 @@ class BootStrap {
             Comment commentAnsw = new Comment(text: "Go back to Google+, faggot",
                     vote: 0,
                     created: new Date(),
-                    edited: new Date(),
+                    edited: new Date(2017, 01, 18, 15, 00, 00),
                     question: null,
                     anwser: answer)
 
             question.save("failOnError": true)
             answer.save("failOnError": true)
+            answer2.save("failOnError": true)
             commentQuest.save("failOnError": true)
             commentAnsw.save("failOnError": true)
         }

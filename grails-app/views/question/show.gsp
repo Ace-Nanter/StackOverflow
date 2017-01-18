@@ -20,6 +20,14 @@
             <p>${question.text}</p>
         </div>
         <hr/>
+        <g:each in="${question.answers}" var="a">
+            <tr>
+                <td>
+                    <g:render template="/answer/displayAnswer" model="['answer':a]" />
+                </td>
+            </tr>
+            <hr />
+        </g:each>
         <g:form action="/answer/save" method="post">
             <g:textField name="text" value="" />
             <g:submitButton name="submitButton" value="Submit" />

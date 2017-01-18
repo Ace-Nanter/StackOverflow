@@ -16,9 +16,8 @@ class Question extends Post {
     }
 
     // Default en bdd
-    /*
+
     static mapping = {
-        views defaultValue: "0"
-        resolved defaultValue: "false"
-    }*/
+        answers order: 'asc', sort: 'edited'
+    }
 }
