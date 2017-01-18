@@ -20,10 +20,12 @@
             <p>${question.text}</p>
         </div>
         <hr/>
-        <g:form action="/answer/save" method="post">
+        <g:form controller="answer" action="addAnswer" method="post">
+            <g:hiddenField name="idQuestion" value="${question.id}" />
             <g:textField name="text" value="" />
-            <g:submitButton name="submitButton" value="Submit" />
+            <g:submitButton name="addAnwser" value="Submit" />
         </g:form>
+
 
 </div>
 </body>
