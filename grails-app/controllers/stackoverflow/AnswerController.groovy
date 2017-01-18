@@ -34,7 +34,6 @@ class AnswerController {
                 question: Question.get(params.idQuestion)
         )
 
-
         if (answer == null) {
             transactionStatus.setRollbackOnly()
             notFound()
@@ -55,6 +54,62 @@ class AnswerController {
                 redirect controller: 'Question', action: 'show', id: answer.question.id
             }
             '*' { respond answer, [status: CREATED] }
+        }
+    }
+
+    @Secured(['ROLE_ANONYMOUS'])
+    @Transactional
+    def upVote(Answer answer){
+        answer.vote++
+
+        if (answer == null) {
+            transactionStatus.setRollbackOnly()
+            notFound()
+            return
+        }
+
+        if (answer.hasErrors()) {
+            transactionStatus.setRollbackOnly()
+            respond answer.errors, view:'edit'
+            return
+        }
+
+        answer.save flush:true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'answer.label', default: 'Answer'), answer.id])
+                redirect controller: 'Question', action: 'show', id: answer.question.id
+            }
+            '*'{ respond answer, [status: OK] }
+        }
+    }
+
+    @Secured(['ROLE_ANONYMOUS'])
+    @Transactional
+    def downVote(Answer answer) {
+        answer.vote--
+
+        if (answer == null) {
+            transactionStatus.setRollbackOnly()
+            notFound()
+            return
+        }
+
+        if (answer.hasErrors()) {
+            transactionStatus.setRollbackOnly()
+            respond answer.errors, view:'edit'
+            return
+        }
+
+        answer.save flush:true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'answer.label', default: 'Answer'), answer.id])
+                redirect controller: 'Question', action: 'show', id: answer.question.id
+            }
+            '*'{ respond answer, [status: OK] }
         }
     }
 
