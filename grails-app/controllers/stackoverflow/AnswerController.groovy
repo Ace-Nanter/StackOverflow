@@ -29,13 +29,12 @@ class AnswerController {
     @Secured(['ROLE_USER'])
     @Transactional
     def addAnswer(){
-        User activeUser = (User)getAuthenticatedUser()
         Answer answer = new Answer(
                 text: params.text,
                 vote: 0,
                 created: new Date(),
                 question: Question.get(params.idQuestion),
-                user: activeUser
+                user: (User)getAuthenticatedUser()
         )
 
         if (answer == null) {

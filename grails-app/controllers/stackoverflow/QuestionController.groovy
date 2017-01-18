@@ -24,6 +24,126 @@ class QuestionController {
         respond new Question(params)
     }
 
+    @Secured(['ROLE_USER'])
+    @Transactional
+    def addQuestion(){
+        Question question = new Question(
+                title: params.title,
+                text: params.text,
+                resolved: false,
+                vote: 0,
+                created: new Date(),
+                user: (User)getAuthenticatedUser()
+        )
+
+        if (question == null) {
+            transactionStatus.setRollbackOnly()
+            notFound()
+            return
+        }
+
+        if (question.hasErrors()) {
+            transactionStatus.setRollbackOnly()
+            respond question.errors, view:'create'
+            return
+        }
+
+        question.save flush:true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.created.message', args: [message(code: 'question.label', default: 'Question'), question.id])
+                redirect question
+            }
+            '*' { respond question, [status: CREATED] }
+        }
+    }
+
+
+    @Secured(['ROLE_ANONYMOUS'])
+    @Transactional
+    def upVote(Question question){
+        question.vote++
+
+        if (question == null) {
+            transactionStatus.setRollbackOnly()
+            notFound()
+            return
+        }
+
+        if (question.hasErrors()) {
+            transactionStatus.setRollbackOnly()
+            respond question.errors, view:'edit'
+            return
+        }
+
+        question.save flush:true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'question.label', default: 'Question'), question.id])
+                redirect question
+            }
+            '*'{ respond question, [status: OK] }
+        }
+    }
+
+    @Secured(['ROLE_ANONYMOUS'])
+    @Transactional
+    def downVote(Question question) {
+        question.vote--
+
+        if (question == null) {
+            transactionStatus.setRollbackOnly()
+            notFound()
+            return
+        }
+
+        if (question.hasErrors()) {
+            transactionStatus.setRollbackOnly()
+            respond question.errors, view:'edit'
+            return
+        }
+
+        question.save flush:true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'question.label', default: 'Question'), question.id])
+                redirect question
+            }
+            '*'{ respond question, [status: OK] }
+        }
+    }
+
+    @Secured(['ROLE_ANONYMOUS'])
+    @Transactional
+    def addView(Question question) {
+        question.views++
+
+        if (question == null) {
+            transactionStatus.setRollbackOnly()
+            notFound()
+            return
+        }
+
+        if (question.hasErrors()) {
+            transactionStatus.setRollbackOnly()
+            respond question.errors, view:'edit'
+            return
+        }
+
+        question.save flush:true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'question.label', default: 'Question'), question.id])
+                redirect question
+            }
+            '*'{ respond question, [status: OK] }
+        }
+    }
+
     @Transactional
     def save(Question question) {
         if (question == null) {
@@ -46,6 +166,34 @@ class QuestionController {
                 redirect question
             }
             '*' { respond question, [status: CREATED] }
+        }
+    }
+
+    @Secured(['ROLE_ANONYMOUS'])
+    @Transactional
+    def setResolved(Question question) {
+        question.resolved = true
+
+        if (question == null) {
+            transactionStatus.setRollbackOnly()
+            notFound()
+            return
+        }
+
+        if (question.hasErrors()) {
+            transactionStatus.setRollbackOnly()
+            respond question.errors, view:'edit'
+            return
+        }
+
+        question.save flush:true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'question.label', default: 'Question'), question.id])
+                redirect question
+            }
+            '*'{ respond question, [status: OK] }
         }
     }
 
