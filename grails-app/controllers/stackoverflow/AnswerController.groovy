@@ -24,15 +24,42 @@ class AnswerController {
         respond new Answer(params)
     }
 
+    @Secured(['ROLE_ANONYMOUS'])
     @Transactional
-    def save() {
-        Answer anwser = new Answer(
+    def addAnswer(){
+        Answer answer = new Answer(
                 text: params.text,
-                question: null,
-                comments: null,
+                vote: 0,
                 created: new Date(),
-                edited: null
+                question: Question.get(params.idQuestion)
         )
+
+
+        if (answer == null) {
+            transactionStatus.setRollbackOnly()
+            notFound()
+            return
+        }
+
+        if (answer.hasErrors()) {
+            transactionStatus.setRollbackOnly()
+            respond answer.errors, view:'create'
+            return
+        }
+
+        answer.save flush:true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.created.message', args: [message(code: 'answer.label', default: 'Answer'), answer.id])
+                redirect controller: 'Question', action: 'show', id: answer.question.id
+            }
+            '*' { respond answer, [status: CREATED] }
+        }
+    }
+
+    @Transactional
+    def save(Answer answer) {
 
         if (answer == null) {
             transactionStatus.setRollbackOnly()
