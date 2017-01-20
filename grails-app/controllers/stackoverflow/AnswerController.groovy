@@ -1,5 +1,7 @@
 package stackoverflow
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal
+
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 import grails.plugin.springsecurity.annotation.Secured
@@ -24,16 +26,16 @@ class AnswerController {
         respond new Answer(params)
     }
 
-    @Secured(['ROLE_ANONYMOUS'])
+    @Secured(['ROLE_USER'])
     @Transactional
     def addAnswer(){
         Answer answer = new Answer(
                 text: params.text,
                 vote: 0,
                 created: new Date(),
-                question: Question.get(params.idQuestion)
+                question: Question.get(params.idQuestion),
+                user: (User)getAuthenticatedUser()
         )
-
 
         if (answer == null) {
             transactionStatus.setRollbackOnly()
@@ -55,6 +57,62 @@ class AnswerController {
                 redirect controller: 'Question', action: 'show', id: answer.question.id
             }
             '*' { respond answer, [status: CREATED] }
+        }
+    }
+
+    @Secured(['ROLE_ANONYMOUS'])
+    @Transactional
+    def upVote(Answer answer){
+        answer.vote++
+
+        if (answer == null) {
+            transactionStatus.setRollbackOnly()
+            notFound()
+            return
+        }
+
+        if (answer.hasErrors()) {
+            transactionStatus.setRollbackOnly()
+            respond answer.errors, view:'edit'
+            return
+        }
+
+        answer.save flush:true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'answer.label', default: 'Answer'), answer.id])
+                redirect controller: 'Question', action: 'show', id: answer.question.id
+            }
+            '*'{ respond answer, [status: OK] }
+        }
+    }
+
+    @Secured(['ROLE_ANONYMOUS'])
+    @Transactional
+    def downVote(Answer answer) {
+        answer.vote--
+
+        if (answer == null) {
+            transactionStatus.setRollbackOnly()
+            notFound()
+            return
+        }
+
+        if (answer.hasErrors()) {
+            transactionStatus.setRollbackOnly()
+            respond answer.errors, view:'edit'
+            return
+        }
+
+        answer.save flush:true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'answer.label', default: 'Answer'), answer.id])
+                redirect controller: 'Question', action: 'show', id: answer.question.id
+            }
+            '*'{ respond answer, [status: OK] }
         }
     }
 

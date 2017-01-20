@@ -7,6 +7,8 @@ class Question extends Post {
     Boolean resolved
     ArrayList<String> tags
 
+    static belongsTo = [user: User]
+
     static hasMany = [answers: Answer, comments: Comment]
 
     static constraints = {
