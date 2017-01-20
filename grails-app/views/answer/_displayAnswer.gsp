@@ -28,7 +28,9 @@
             <br/>
             <!-- Edit area -->
             <g:isOwner owner="${answer.user}">
-                <button class="glyphicon glyhicon-pencil" />
+                <g:link class="btn btn-primary glyphicon-pencil" url="/answer/edit/${answer.id}">
+                    ${message(code: 'buttons.answer.edit', default: ' Edit answer ')}
+                </g:link>
             </g:isOwner>
         </div>
 
