@@ -28,8 +28,8 @@ class BootStrap {
 
             Answer answer = new Answer(text: "No it is a serious answer #BackToTheFuture",
                     vote: 2,
-                    created: new Date(1484751600000),
-                    edited: new Date(1484752600000),
+                    created: new Date(1484651600000),
+                    edited: new Date(1484652600000),
                     question: question,
                     user: testUser
             )
@@ -44,16 +44,16 @@ class BootStrap {
 
             Answer answer4 = new Answer(text: "42",
                     vote: 2,
-                    created: new Date(1485751600000),
-                    edited: new Date(1485752600000),
+                    created: new Date(1485651600000),
+                    edited: new Date(1485652600000),
                     question: question,
                     user: testUser
             )
 
             Answer answer3 = new Answer(text: "You Only Live Once",
                     vote: 2,
-                    created: new Date(1484751600000),
-                    edited: new Date(1484752600000),
+                    created: new Date(1484651600000),
+                    edited: new Date(1484652600000),
                     question: question,
                     user: testUser
             )
@@ -69,8 +69,8 @@ class BootStrap {
 
             Comment commentAnsw = new Comment(text: "Go back to Google+, faggot",
                     vote: 0,
-                    created: new Date(1484751600000),
-                    edited: new Date(1484752600000),
+                    created: new Date(1484651600000),
+                    edited: new Date(1484652600000),
                     question: null,
                     anwser: answer,
                     user: testUser

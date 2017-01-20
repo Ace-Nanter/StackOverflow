@@ -143,7 +143,10 @@ class AnswerController {
     }
 
     @Transactional
-    def update(Answer answer) {
+    def update(Answer answer, String text) {
+        answer.text = text
+        answer.edited = new Date()
+
         if (answer == null) {
             transactionStatus.setRollbackOnly()
             notFound()

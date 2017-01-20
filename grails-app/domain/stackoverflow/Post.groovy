@@ -9,15 +9,14 @@ class Post {
     Date edited
 
     static constraints = {
-        edited (nullable: true, validator:{
+        // To add later
+        // Make sure boostraps init can handle this constraint
+
+       /* edited (nullable: true, validator:{
             value, reference ->
                 return value == null || value >= reference.created
-        })
-    }
+        })*/
 
-   /*// Default en BDD
-   static mapping = {
-        vote defaultValue: "0"
-        created defaultValue: "now()"
-    }*/
+        edited nullable: true
+    }
 }

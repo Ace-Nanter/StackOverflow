@@ -5,7 +5,6 @@ class Question extends Post {
     String title
     Integer views
     Boolean resolved
-    ArrayList<String> tags
 
     static belongsTo = [user: User]
 
