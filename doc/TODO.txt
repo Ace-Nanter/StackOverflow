@@ -1,0 +1,11 @@
+- Trier les réponses en fonction de leur vote
+- Implementation des tags pour les questions
+- Edition des reponses et questions
+- Implementation du systeme de reputation des User
+- Implementation du systeme de badge
+- UML
+- Doc technique
+- UI Mockups
+- Internationalisation
+- Logs
+- url send by mail ?
