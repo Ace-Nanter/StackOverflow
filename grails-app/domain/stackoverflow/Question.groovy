@@ -9,7 +9,7 @@ class Question extends Post {
 
     static belongsTo = [user: User]
 
-    static hasMany = [answers: Answer, comments: Comment]
+    static hasMany = [answers: Answer, comments: Comment, tags: Tag]
 
     static constraints = {
         tags nullable: true
