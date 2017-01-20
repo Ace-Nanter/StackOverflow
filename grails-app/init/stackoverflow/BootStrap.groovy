@@ -60,7 +60,7 @@ class BootStrap {
                     user: testUser
             )
 
-            Tag tag = new Tag(name: "Life", question:question)
+            Tag tag = new Tag(name: "Life", question:question, questions:[question])
 
             question.tags = [tag]
 

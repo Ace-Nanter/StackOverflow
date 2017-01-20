@@ -15,6 +15,7 @@ class Question extends Post {
         tags nullable: true
         answers nullable: true
         comments nullable: true
+        tags nullable: true
     }
 
     // Default en bdd
