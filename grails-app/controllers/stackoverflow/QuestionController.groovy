@@ -64,6 +64,7 @@ class QuestionController {
     @Transactional
     def upVote(Question question){
         question.vote++
+        question.user.reputation += User.REPUTATION_COEF
 
         if (question == null) {
             transactionStatus.setRollbackOnly()
@@ -92,6 +93,7 @@ class QuestionController {
     @Transactional
     def downVote(Question question) {
         question.vote--
+        question.user.reputation -= User.REPUTATION_COEF
 
         if (question == null) {
             transactionStatus.setRollbackOnly()

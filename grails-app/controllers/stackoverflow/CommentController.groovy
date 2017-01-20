@@ -65,6 +65,7 @@ class CommentController {
     def upVote(Comment comment){
         def idQuestion = comment.answer!=null?comment.answer.question.id:comment.question.id
         comment.vote++
+        comment.user.reputation += User.REPUTATION_COEF
 
         if (comment == null) {
             transactionStatus.setRollbackOnly()
@@ -94,6 +95,7 @@ class CommentController {
     def downVote(Comment comment) {
         def idQuestion = comment.answer!=null?comment.answer.question.id:comment.question.id
         comment.vote--
+        comment.user.reputation -= User.REPUTATION_COEF
 
         if (comment == null) {
             transactionStatus.setRollbackOnly()

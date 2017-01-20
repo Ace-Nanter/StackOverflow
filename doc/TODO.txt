@@ -1,7 +1,7 @@
-- Trier les réponses en fonction de leur vote
-- Implementation des tags pour les questions
+- Trier les rï¿½ponses en fonction de leur vote
+- Implementation des tags pour les questions (modeles prets)
 - Edition des reponses et questions
-- Implementation du systeme de reputation des User
+- Implementation du systeme de reputation des User (implementation faite)
 - Implementation du systeme de badge
 - TESTS UNITAIRES
 - UML

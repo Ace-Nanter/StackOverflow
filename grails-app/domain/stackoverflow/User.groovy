@@ -7,6 +7,8 @@ import groovy.transform.ToString
 @ToString(includes='username', includeNames=true, includePackage=false)
 class User implements Serializable {
 
+	static final int REPUTATION_COEF = 5
+
 	static hasMany = [questions: Question, answers: Answer ,comments: Comment]
 	int reputation = 0
 
