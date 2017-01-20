@@ -3,6 +3,7 @@
 - Edition des reponses et questions
 - Implementation du systeme de reputation des User
 - Implementation du systeme de badge
+- TESTS UNITAIRES
 - UML
 - Doc technique
 - UI Mockups

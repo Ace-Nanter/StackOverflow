@@ -60,9 +60,9 @@ class BootStrap {
                     user: testUser
             )
 
-            Tag tag = new Tag(name: "Life", question:question, questions:[question])
+          //  Tag tag = new Tag(name: "Life", question:question, questions:[question])
 
-            question.tags = [tag]
+          //  question.tags = [tag]
 
             testUser.questions = [question]
             testUser.answers = [answer, answer2]
@@ -74,7 +74,7 @@ class BootStrap {
             commentQuest.save("failOnError": true)
             commentAnsw.save("failOnError": true)
             testUser.save("failOnError": true)
-            tag.save("failOnError": true)
+           // tag.save("failOnError": true)
         }
 
         UserRole.create testUser, adminRole
