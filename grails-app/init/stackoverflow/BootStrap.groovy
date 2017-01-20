@@ -62,6 +62,8 @@ class BootStrap {
 
             Tag tag = new Tag(name: "Life", question:question)
 
+            question.tags = [tag]
+
             testUser.questions = [question]
             testUser.answers = [answer, answer2]
             testUser.comments = [commentAnsw, commentQuest]
