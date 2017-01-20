@@ -1,5 +1,6 @@
 package stackoverflow
 
+
 class Answer extends Post {
 
     static belongsTo = [question: Question, user: User]
