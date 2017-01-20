@@ -8,7 +8,10 @@ class Post {
     Date edited
 
     static constraints = {
-        edited nullable: true
+        edited (nullable: true, validator:{
+            value, reference ->
+                return value == null || value >= reference.created
+        })
     }
 
    /*// Default en BDD

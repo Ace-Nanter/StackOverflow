@@ -39,8 +39,8 @@ class BootStrap {
 
             Answer answer = new Answer(text: "Everything is said in the title : what is the meaning of life ?",
                     vote: 0,
-                    created: new Date(),
-                    edited: new Date(1484751600000),
+                    created: new Date(1484751600000),
+                    edited: new Date(1484752600000),
                     question: question)
 
             Answer answer2 = new Answer(text: "The answer below wasn't a very serious answer.",
@@ -58,8 +58,8 @@ class BootStrap {
 
             Comment commentAnsw = new Comment(text: "Go back to Google+, faggot",
                     vote: 0,
-                    created: new Date(),
-                    edited: new Date(2017, 01, 18, 15, 00, 00),
+                    created: new Date(1484751600000),
+                    edited: new Date(1484752600000),
                     question: null,
                     anwser: answer)
 

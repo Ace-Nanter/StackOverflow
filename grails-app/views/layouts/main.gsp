@@ -17,18 +17,21 @@
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 </button>
-                <g:link class="navbar-brand" url="/">Home</g:link>
+                <g:link class="navbar-brand" url="/">${message(code: 'menu.home.label', default: 'Home')}</g:link>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav"></ul>
                 <!-- Login part -->
                 <div class="nav navbar-nav navbar-right">
                     <sec:ifNotLoggedIn>
-                        <g:link class="navbar-brand" url="/user/create">${message(code: 'default.user.signup', default: 'Sign up')}</g:link>
-                        <g:link class="navbar-brand" url="/login">${message(code: 'default.user.signin', default: 'Sign in')}</g:link>
+                        <g:link class="navbar-brand" url="/user/create">${message(code: 'menu.user.signup', default: 'Sign up')}</g:link>
+                        <g:link class="navbar-brand" url="/login">${message(code: 'menu.user.signin', default: 'Sign in')}</g:link>
                     </sec:ifNotLoggedIn>
                     <sec:ifLoggedIn>
-                        <g:link class="navbar-brand" url="/logout">${message(code: 'default.user.signout', default: 'Sign out')}</g:link>
+                        <g:link class="navbar-brand" url="/user/edit/${sec.loggedInUserInfo(field: 'id')}">
+                            <sec:username/>
+                        </g:link>
+                        <g:link class="navbar-brand" url="/logout">${message(code: 'menu.user.signout', default: 'Sign out')}</g:link>
                     </sec:ifLoggedIn>
 
                 </div>

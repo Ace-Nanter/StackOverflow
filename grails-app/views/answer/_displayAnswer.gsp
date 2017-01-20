@@ -18,5 +18,11 @@
     </div>
     <!-- Display date -->
     <div class="text-right">
-        <g:formatDate date="${answer.edited}" format="dd-MM-yyyy HH:mm:ss" />
+        <p>
+            ${message(code: 'answer.date.created', default:'Created : ')}<g:formatDate date="${answer.created}" format="dd-MM-yyyy HH:mm:ss" />
+            <br />
+            <g:if test="${answer.edited != null}">
+                ${message(code: 'answer.date.edited', default:'Edited : ')}<g:formatDate date="${answer.edited}" format="dd-MM-yyyy HH:mm:ss" />
+            </g:if>
+        </p>
     </div>
