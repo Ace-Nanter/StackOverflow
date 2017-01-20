@@ -6,6 +6,7 @@ import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 import grails.plugin.springsecurity.annotation.Secured
 
+@Secured(['ROLE_USER'])
 @Transactional(readOnly = true)
 class AnswerController {
 
@@ -26,7 +27,6 @@ class AnswerController {
         respond new Answer(params)
     }
 
-    @Secured(['ROLE_USER'])
     @Transactional
     def addAnswer(){
         Answer answer = new Answer(
@@ -60,7 +60,6 @@ class AnswerController {
         }
     }
 
-    @Secured(['ROLE_ANONYMOUS'])
     @Transactional
     def upVote(Answer answer){
         answer.vote++
@@ -88,7 +87,6 @@ class AnswerController {
         }
     }
 
-    @Secured(['ROLE_ANONYMOUS'])
     @Transactional
     def downVote(Answer answer) {
         answer.vote--

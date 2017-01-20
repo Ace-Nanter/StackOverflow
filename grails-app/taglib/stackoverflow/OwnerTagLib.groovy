@@ -13,7 +13,4 @@ class OwnerTagLib {
 
         }
     }
-
-
-    //static encodeAsForTags = [tagName: [taglib:'html'], otherTagName: [taglib:'none']]
 }
