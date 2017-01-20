@@ -1,7 +1,5 @@
 package stackoverflow
 
-import org.springframework.security.core.annotation.AuthenticationPrincipal
-
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 import grails.plugin.springsecurity.annotation.Secured
@@ -129,7 +127,7 @@ class AnswerController {
             return
         }
 
-        answer.save flush:true
+        answer.save()
 
         request.withFormat {
             form multipartForm {

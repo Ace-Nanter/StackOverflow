@@ -28,8 +28,8 @@
             <br/>
             <!-- Edit area -->
             <g:isOwner owner="${answer.user}">
-                <g:link class="btn btn-primary glyphicon-pencil" url="/answer/edit/${answer.id}">
-                    ${message(code: 'buttons.answer.edit', default: ' Edit answer ')}
+                <g:link class="btn btn-primary glyphicon-pencil" action="edit" resource="${this.answer}">
+                    <g:message code="buttons.answer.edit" default=" Edit answer " />
                 </g:link>
             </g:isOwner>
         </div>

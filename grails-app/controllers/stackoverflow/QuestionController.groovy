@@ -197,11 +197,13 @@ class QuestionController {
         }
     }
 
+    @Secured(['ROLE_USER'])
     def edit(Question question) {
         respond question
     }
 
     @Transactional
+    @Secured(['ROLE_USER'])
     def update(Question question) {
         if (question == null) {
             transactionStatus.setRollbackOnly()
