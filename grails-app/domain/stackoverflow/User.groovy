@@ -8,6 +8,7 @@ import groovy.transform.ToString
 class User implements Serializable {
 
 	static hasMany = [questions: Question, answers: Answer ,comments: Comment]
+	int reputation = 0
 
 	private static final long serialVersionUID = 1
 
