@@ -21,6 +21,6 @@ class Question extends Post {
     // Default en bdd
 
     static mapping = {
-        answers order: 'asc', sort: 'edited'
+        answers order: 'desc', sort: 'vote'
     }
 }

@@ -27,7 +27,7 @@ class BootStrap {
                     user: testUser)
 
             Answer answer = new Answer(text: "Everything is said in the title : what is the meaning of life ?",
-                    vote: 0,
+                    vote: 2,
                     created: new Date(1484751600000),
                     edited: new Date(1484752600000),
                     question: question,
@@ -35,9 +35,25 @@ class BootStrap {
             )
 
             Answer answer2 = new Answer(text: "The answer below wasn't a very serious answer.",
-                    vote: 0,
+                    vote: 5,
                     created: new Date(),
                     edited: new Date(),
+                    question: question,
+                    user: testUser
+            )
+
+            Answer answer4 = new Answer(text: "42",
+                    vote: 2,
+                    created: new Date(1485751600000),
+                    edited: new Date(1485752600000),
+                    question: question,
+                    user: testUser
+            )
+
+            Answer answer3 = new Answer(text: "You Only Live Once",
+                    vote: 2,
+                    created: new Date(1484751600000),
+                    edited: new Date(1484752600000),
                     question: question,
                     user: testUser
             )
@@ -71,6 +87,8 @@ class BootStrap {
             question.save("failOnError": true)
             answer.save("failOnError": true)
             answer2.save("failOnError": true)
+            answer4.save("failOnError": true)
+            answer3.save("failOnError": true)
             commentQuest.save("failOnError": true)
             commentAnsw.save("failOnError": true)
             testUser.save("failOnError": true)

@@ -1,5 +1,6 @@
 package stackoverflow
 
+
 class Post {
 
     String text
