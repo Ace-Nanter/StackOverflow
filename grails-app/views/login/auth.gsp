@@ -13,7 +13,35 @@
 
 		<g:if test='${flash.message}'>
 			<div class="login_message">${flash.message}</div>
-		</g:if>
+		</g:if><!--
+        <div class="container">
+            <div class="row top-margin-50">
+                <div class="col-sm-6 col-md-4 col-md-offset-4">
+                    <h1 class="text-center login-title">Title to replace</h1>
+                    <div class="account-wall">
+                        <form class="form-signin top-margin-50">
+                            <input type="text" class="form-control" placeholder="Email" required autofocus>
+                            <input type="password" class="form-control" placeholder="Password" required>
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">
+                                Sign in</button>
+                            <label class="checkbox pull-left">
+                                <input type="checkbox" value="remember-me">
+                                Remember me
+                            </label>
+                        </form>
+                    </div>
+                    <a href="#" class="text-center new-account">Create an account </a>
+                </div>
+            </div>
+        </div>
+-->
+
+
+
+
+
+
+
         <section>
             <form action="${postUrl ?: '/login/authenticate'}" method="POST" id="loginForm" autocomplete="off">
                 <div class="form-horizontal">
@@ -44,6 +72,7 @@
 (function() {
 	document.forms['loginForm'].elements['${usernameParameter ?: 'username'}'].focus();
 })();
+
 </script>
 </body>
 </html>
