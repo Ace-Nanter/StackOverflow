@@ -127,6 +127,33 @@ class CommentController {
     }
 
     @Transactional
+    def updateText(Comment comment, String text) {
+        if (comment == null) {
+            transactionStatus.setRollbackOnly()
+            notFound()
+            return
+        }
+
+        if (comment.hasErrors()) {
+            transactionStatus.setRollbackOnly()
+            respond comment.errors, view:'edit'
+            return
+        }
+
+        comment.text = text
+        comment.edited = new Date()
+        comment.save flush:true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.created.message', args: [message(code: 'comment.label', default: 'Comment'), comment.id])
+                redirect controller: 'Question', action: 'show', id: comment.question.id
+            }
+            '*'{ respond comment, [status: OK] }
+        }
+    }
+
+    @Transactional
     def save(Comment comment) {
         if (comment == null) {
             transactionStatus.setRollbackOnly()

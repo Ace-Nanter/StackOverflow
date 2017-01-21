@@ -26,10 +26,11 @@
                 </g:eachError>
             </ul>
             </g:hasErrors>
-            <g:form resource="${this.question}" method="PUT">
+            <g:form controller="question" action="updateText" resource="${this.question}" method="PUT">
                 <g:hiddenField name="version" value="${this.question?.version}" />
                 <fieldset class="form">
-                    <f:all bean="question"/>
+                    <g:textField name="title" value="${this.question?.title}" />
+                    <g:textField name="text" value="${this.question?.text}" />
                 </fieldset>
                 <fieldset class="buttons">
                     <input class="save" type="submit" value="${message(code: 'default.button.update.label', default: 'Update')}" />

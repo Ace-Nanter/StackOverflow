@@ -4,6 +4,7 @@ import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 import grails.plugin.springsecurity.annotation.Secured
 
+@Secured(['ROLE_USER'])
 @Transactional(readOnly = true)
 class QuestionController {
 
@@ -24,7 +25,6 @@ class QuestionController {
         respond new Question(params)
     }
 
-    @Secured(['ROLE_USER'])
     @Transactional
     def addQuestion(){
         Question question = new Question(
@@ -60,8 +60,6 @@ class QuestionController {
         }
     }
 
-
-    @Secured(['ROLE_ANONYMOUS'])
     @Transactional
     def upVote(Question question){
 
@@ -92,7 +90,6 @@ class QuestionController {
         }
     }
 
-    @Secured(['ROLE_ANONYMOUS'])
     @Transactional
     def downVote(Question question) {
 
@@ -176,7 +173,6 @@ class QuestionController {
         }
     }
 
-    @Secured(['ROLE_ANONYMOUS'])
     @Transactional
     def setResolved(Question question) {
 
@@ -204,13 +200,39 @@ class QuestionController {
         }
     }
 
-    @Secured(['ROLE_USER'])
+    @Transactional
+    def updateText(Question question, String title, String text) {
+        if (question == null) {
+            transactionStatus.setRollbackOnly()
+            notFound()
+            return
+        }
+
+        if (question.hasErrors()) {
+            transactionStatus.setRollbackOnly()
+            respond question.errors, view:'edit'
+            return
+        }
+
+        question.title = title
+        question.text = text
+        question.edited = new Date()
+        question.save flush:true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'question.label', default: 'Question'), question.id])
+                redirect controller: 'Question', action: 'show', id: question.id
+            }
+            '*'{ respond question, [status: OK] }
+        }
+    }
+
     def edit(Question question) {
         respond question
     }
 
     @Transactional
-    @Secured(['ROLE_USER'])
     def update(Question question) {
         if (question == null) {
             transactionStatus.setRollbackOnly()
