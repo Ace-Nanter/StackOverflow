@@ -44,7 +44,7 @@ h1, input {
 }
 .input:focus {
     outline: none;
-    border-bottom-color: #3CC !important;
+    border-bottom-color: #000 !important;
 }
 .input:hover {
     border-bottom-color: #dcdcdc;
