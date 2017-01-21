@@ -9,7 +9,7 @@ class BootStrap {
         def userRole = new Role(authority: 'ROLE_USER').save()
         def anonymousRole = new Role(authority: 'ROLE_ANONYMOUS').save()
 
-        def testUser = new User(username: 'me', password: 'password')
+        def testUser = new User(username: 'me', password: 'password', email: 'test.user@domain.com')
         // def anonymousUser = new User (username:'anonymous', password: '1234').save()
 
         // Stub data
