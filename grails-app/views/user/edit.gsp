@@ -13,43 +13,121 @@
 </head>
 <body>
 <div class="container top-margin-50">
-	<div class="row">
-		<div class="col-md-10">
-			<g:isOwner owner="${user}">
-				<input name="${usernameParameter ?: 'username'}" type="text" id="username" pattern="^[\w]{3,16}$" autofocus="autofocus"
-					   class="input pass" placeholder="${message(code: 'login.field.username', default: 'Enter your username')}"/>
-			</g:isOwner>
-			<g:isNotOwner>
-				<h1><g:message code="user.profile.title" args="${user.username}" default="${user.username}'s profile"/></h1>
-			</g:isNotOwner>
-			<br/>
-			${user.username}
 
-		</div>
-	</div>
-	<div id="logbox" class="top-margin-50">
-		<form action="${postUrl ?: '/user/save'}" method="POST" name="saveForm" id="saveForm" autocomplete="off">
-			<h1><g:message code='register.title.label' default="Create a new account"/></h1>
+    <h1 class="text-center"><g:message code="user.profile.title" args="[user.username]" default="${user.username}'s profile"/></h1>
 
+    <!-- Reputation -->
+    <div>
+        <label>Reputation</label>
+        <span class="label label-success">
+            ${user.reputation}
+        </span>
 
+        <br/>
+        <label>Badges</label>
+    </div>
 
+    <!-- User information -->
+    <g:isOwner owner="${user}">
+        <div class="panel panel-default top-margin-50">
+            <div class="panel-heading">
+                <h3>User information</h3>
+            </div>
+            <div class="panel-body">
+                <form>
+                    <div class="row">
+                        <label class="col-md-4">Username : </label>
+                        <input name="${usernameParameter ?: 'username'}" type="text" id="username" pattern="^[\w]{3,16}$" autofocus="autofocus"
+                               class="col-md-8" placeholder="${message(code: 'login.field.username', default: 'Enter your username')}"/>
 
-			<input name="${emailParameter ?: 'email'}" type="email" id="email"
-				   class="input pass" placeholder="${message(code: 'login.field.email', default: 'Enter your email')}"/>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>Email : </label>
+                        </div>
+                        <div class="col-md-8">
+                            <input name="${emailParameter ?: 'email'}" type="email" id="email"
+                                   placeholder="${message(code: 'login.field.email', default: 'Enter your email')}"/>
+                        </div>
 
-			<input name="${passwordParameter ?: 'password'}" type="password" required="required" id="password"
-				   placeholder="${message(code: 'login.field.password', default: 'Enter your username')}" class="input pass"/>
+                    </div>
+                    <div class="row">
+                        <label class="col-md-4">Password</label>
+                        <input name="${passwordParameter ?: 'password'}" type="password" required="required" id="password"
+                               placeholder="${message(code: 'login.field.password', default: 'Enter your username')}" class="col-md-8"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </g:isOwner>
 
-			<input type="submit" id="submit" value="${message(code: 'register.input.submit', default: 'Create an account')}" class="inputButton"/>
-			<g:hiddenField name="ROLE_USER" value="on"/>
+    <!-- Questions -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3>Questions</h3>
+        </div>
+        <div class="panel-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Votes</th>
+                        <th>Question</th>
+                        <th>Tags</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <g:each in="${user.questions}" var="question">
+                        <tr>
+                            <td>${question.vote}</td>
+                            <td>${question.title}</td>
+                            <td>
+                                <g:each in="${question.tags}" var="tag">
+                                    <div class="label label-default">
+                                        ${tag.name}
+                                    </div>
+                                </g:each>
+                            </td>
+                        </tr>
+                    </g:each>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-			<div class="text-center">
-				<g:link controller="user" action="create">
-					<g:message code="register.link.login" default="Register a new account"/>
-				</g:link>
-			</div>
-		</form>
-	</div>
+    <!-- Answers -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3>Answers</h3>
+        </div>
+        <div class="panel-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Votes answers</th>
+                    <th>Votes question</th>
+                    <th>Question</th>
+                    <th>Tags</th>
+                </tr>
+                </thead>
+                <tbody>
+                <g:each in="${user.answers}" var="answer">
+                    <tr>
+                        <td>${answer.vote}</td>
+                        <td>${answer.question.vote}</td>
+                        <td>${answer.question.title}</td>
+                        <td>
+                            <g:each in="${answer.question.tags}" var="tag">
+                                <div class="label label-default">
+                                    ${tag.name}
+                                </div>
+                            </g:each>
+                        </td>
+                    </tr>
+                </g:each>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 </body>
 </html>
