@@ -5,6 +5,9 @@ import grails.util.Environment
 class BootStrap {
 
     def init = { servletContext ->
+
+        Badge.createAllBadge()
+
         def adminRole = new Role(authority: 'ROLE_ADMIN').save()
         def userRole = new Role(authority: 'ROLE_USER').save()
         def anonymousRole = new Role(authority: 'ROLE_ANONYMOUS').save()
@@ -83,6 +86,8 @@ class BootStrap {
             testUser.questions = [question]
             testUser.answers = [answer, answer2]
             testUser.comments = [commentAnsw, commentQuest]
+
+            Badge.controlBadges(testUser)
 
             question.save("failOnError": true)
             answer.save("failOnError": true)

@@ -22,29 +22,31 @@ class Badge {
 
     static User controlBadges(User user) {
         if (user != null) {
-            if (user.questions != null && user.questions.count(null) == 1) {
-                user.addToBadges(get(name: "Ask a question"))
+            if(user.badges == null) {
+                user.badges = []
             }
 
-            if (user.questions != null && user.questions.count(null) == 3) {
-                user.addToBadges(get(name: "Ask 3 questions"))
+            if (user.questions != null && user.questions.size() == 1) {
+                user.addToBadges(findByName("Ask a question"))
             }
 
-            if (user.answers != null && user.answers.count(null) == 1) {
-                user.addToBadges(get(name: "Give an answer"))
+            if (user.questions != null && user.questions.size() == 3) {
+                user.addToBadges(findByName("Ask 3 questions"))
+            }
+
+            if (user.answers != null && user.answers.size() == 1) {
+                user.addToBadges(findByName("Give an answer"))
             }
 
             if (user.comments != null && user.comments.count({ it.question == null }) == 1) {
-                user.addToBadges(get(name: "Comment an answer"))
+                user.addToBadges(findByName("Comment an answer"))
             }
 
             if (user.comments != null && user.comments.count({ it.answer == null }) == 1) {
-                user.addToBadges(get(name: "Comment a question"))
+                user.addToBadges(findByName("Comment a question"))
             }
 
-            if(user.badges != null) {
-                user.badges = user.badges.unique { it.name }
-            }
+            user.badges = user.badges.unique { it.name }
         }
         return user
     }
