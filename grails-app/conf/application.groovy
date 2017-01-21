@@ -5,6 +5,10 @@ grails.plugin.springsecurity.userLookup.userDomainClassName = 'stackoverflow.Use
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'stackoverflow.UserRole'
 grails.plugin.springsecurity.authority.className = 'stackoverflow.Role'
 grails.plugin.springsecurity.logout.postOnly=false
+grails.plugins.springsecurity.successHandler.defaultTargetUrl='/question/index'
+grails.plugin.springsecurity.ui.register.postRegisterUrl = '/question/index'
+
+
 grails.plugin.springsecurity.roleHierarchy = '''
    ROLE_ADMIN > ROLE_USER
    ROLE_USER > ROLE_ANONYMOUS
@@ -33,5 +37,3 @@ grails.plugin.springsecurity.filterChain.chainMap = [
 	[pattern: '/**/favicon.ico', filters: 'none'],
 	[pattern: '/**',             filters: 'JOINED_FILTERS']
 ]
-
-// TODO: Faire la hierachie des admins et user (taper hierarchie dans la doc bizoux)
