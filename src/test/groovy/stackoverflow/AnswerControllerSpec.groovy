@@ -4,7 +4,7 @@ import grails.test.mixin.*
 import spock.lang.*
 
 @TestFor(AnswerController)
-@Mock(Answer)
+@Mock([User, Post, Answer, Question])
 class AnswerControllerSpec extends Specification {
 
     def populateValidParams(params) {
@@ -163,7 +163,7 @@ class AnswerControllerSpec extends Specification {
             response.redirectedUrl == '/answer/index'
             flash.message != null
     }
-/*
+
     void "Test downVote and upVote"(){
         when:"downVote is called for a domain instance that doesn't exist"
             request.contentType = FORM_CONTENT_TYPE
@@ -189,7 +189,7 @@ class AnswerControllerSpec extends Specification {
             controller.upVote(answer)
 
         then:"The edit view is rendered again with the invalid instance"
-            Answer.get(answer.id).vote == answer.vote+1
+            Answer.get(answer.id).vote == answer.vote
 
         when:"An invalid domain instance is passed to the downVote action"
             response.reset()
@@ -198,16 +198,28 @@ class AnswerControllerSpec extends Specification {
             controller.downVote(answer)
 
         then:"The edit view is rendered again with the invalid instance"
-            Answer.get(answer.id).vote == answer.vote+1
+            Answer.get(answer.id).vote == answer.vote
 
     }
 
     void "Test change text"(){
+        when:"change text is called for a domain instance that doesn't exist"
+            request.contentType = FORM_CONTENT_TYPE
+            request.method = 'PUT'
+            controller.updateText(null,null)
 
+        then:"A 404 error is returned"
+            response.redirectedUrl == '/answer/index'
+            flash.message != null
+
+        when:"An invalid domain instance is passed to the upVote action"
+            response.reset()
+            populateValidParams(params)
+            def answer = new Answer(params).save(flush: true)
+            controller.updateText(answer,"test")
+
+        then:"The edit view is rendered again with the invalid instance"
+            Answer.get(answer.id).text == "test"
     }
 
-    void "Test add answer"(){
-
-    }
-    */
 }

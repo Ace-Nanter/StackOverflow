@@ -49,6 +49,8 @@ class AnswerController {
 
         answer.save flush:true
 
+        Badge.controlBadges((User)getAuthenticatedUser())?.save()
+
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'answer.label', default: 'Answer'), answer.id])
@@ -73,6 +75,7 @@ class AnswerController {
         }
 
         answer.vote++
+
         answer.user.reputation += User.REPUTATION_COEF
         answer.user.save flush:true
 
@@ -102,10 +105,11 @@ class AnswerController {
         }
 
         answer.vote--
+        answer.save flush:true
+
         answer.user.reputation -= User.REPUTATION_COEF
         answer.user.save flush:true
 
-        answer.save flush:true
 
         request.withFormat {
             form multipartForm {
@@ -159,6 +163,7 @@ class AnswerController {
         }
 
         answer.save()
+        Badge.controlBadges(answer.user)?.save()
 
         request.withFormat {
             form multipartForm {

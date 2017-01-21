@@ -4,7 +4,7 @@ import grails.test.mixin.*
 import spock.lang.*
 
 @TestFor(CommentController)
-@Mock(Comment)
+@Mock([User, Post, Comment, Question])
 class CommentControllerSpec extends Specification {
 
     def populateValidParams(params) {
@@ -161,5 +161,43 @@ class CommentControllerSpec extends Specification {
             Comment.count() == 0
             response.redirectedUrl == '/comment/index'
             flash.message != null
+    }
+
+    void "Test downVote and upVote"(){
+        when:"downVote is called for a domain instance that doesn't exist"
+        request.contentType = FORM_CONTENT_TYPE
+        request.method = 'PUT'
+        controller.downVote(null)
+
+        then:"A 404 error is returned"
+        response.redirectedUrl == '/comment/index'
+        flash.message != null
+
+        when:"upVote is called for a domain instance that doesn't exist"
+        response.reset()
+        controller.upVote(null)
+
+        then:"A 404 error is returned"
+        response.redirectedUrl == '/comment/index'
+        flash.message != null
+
+        when:"An invalid domain instance is passed to the upVote action"
+        response.reset()
+        populateValidParams(params)
+        def comment = new Comment(params).save(flush: true)
+        controller.upVote(comment)
+
+        then:"The edit view is rendered again with the invalid instance"
+        Comment.get(comment.id).vote == comment.vote
+
+        when:"An invalid domain instance is passed to the downVote action"
+        response.reset()
+        populateValidParams(params)
+        comment = new Comment(params).save(flush: true)
+        controller.downVote(comment)
+
+        then:"The edit view is rendered again with the invalid instance"
+        Comment.get(comment.id).vote == comment.vote
+
     }
 }

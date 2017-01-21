@@ -45,11 +45,12 @@ class CommentController {
 
         if (comment.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond answer.errors, view:'create'
+            respond comment.errors, view:'create'
             return
         }
 
         comment.save flush:true
+        Badge.controlBadges(comment.user)?.save()
 
         request.withFormat {
             form multipartForm {
@@ -140,6 +141,7 @@ class CommentController {
         }
 
         comment.save flush:true
+        Badge.controlBadges(comment.user)?.save()
 
         request.withFormat {
             form multipartForm {

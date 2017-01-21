@@ -4,7 +4,7 @@ import grails.test.mixin.*
 import spock.lang.*
 
 @TestFor(TagController)
-@Mock(Tag)
+@Mock([User, Tag, Question])
 class TagControllerSpec extends Specification {
 
     def populateValidParams(params) {
@@ -21,7 +21,6 @@ class TagControllerSpec extends Specification {
                 user: user)
 
         params["name"] = "Life"
-        params["question"] = question
         params["questions"] = [question]
 
     }

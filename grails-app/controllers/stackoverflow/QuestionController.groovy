@@ -49,6 +49,7 @@ class QuestionController {
         }
 
         question.save flush:true
+        Badge.controlBadges(question.user)?.save()
 
         request.withFormat {
             form multipartForm {
@@ -164,6 +165,7 @@ class QuestionController {
         }
 
         question.save flush:true
+        Badge.controlBadges(question.user)?.save()
 
         request.withFormat {
             form multipartForm {

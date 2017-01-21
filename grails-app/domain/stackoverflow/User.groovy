@@ -9,7 +9,7 @@ class User implements Serializable {
 
 	static final int REPUTATION_COEF = 5
 
-	static hasMany = [questions: Question, answers: Answer ,comments: Comment]
+	static hasMany = [questions: Question, answers: Answer ,comments: Comment, badges: Badge]
 	int reputation = 0
 
 	private static final long serialVersionUID = 1
@@ -48,6 +48,10 @@ class User implements Serializable {
 		password blank: false, password: true
 		username blank: false, unique: true
         email blank: false, unique: true
+		questions nullable: true
+		answers nullable: true
+		comments nullable: true
+		badges nullable: true
 	}
 
 	static mapping = {
