@@ -63,8 +63,7 @@ class QuestionController {
     @Secured(['ROLE_ANONYMOUS'])
     @Transactional
     def upVote(Question question){
-        question.vote++
-        question.user.reputation += User.REPUTATION_COEF
+
 
         if (question == null) {
             transactionStatus.setRollbackOnly()
@@ -78,6 +77,9 @@ class QuestionController {
             return
         }
 
+        question.vote++
+        question.user.reputation += User.REPUTATION_COEF
+        question.user.save()
         question.save flush:true
 
         request.withFormat {
@@ -92,8 +94,6 @@ class QuestionController {
     @Secured(['ROLE_ANONYMOUS'])
     @Transactional
     def downVote(Question question) {
-        question.vote--
-        question.user.reputation -= User.REPUTATION_COEF
 
         if (question == null) {
             transactionStatus.setRollbackOnly()
@@ -107,6 +107,9 @@ class QuestionController {
             return
         }
 
+        question.vote--
+        question.user.reputation -= User.REPUTATION_COEF
+        question.user.save()
         question.save flush:true
 
         request.withFormat {
@@ -121,7 +124,7 @@ class QuestionController {
     @Secured(['ROLE_ANONYMOUS'])
     @Transactional
     def addView(Question question) {
-        question.views++
+
 
         if (question == null) {
             transactionStatus.setRollbackOnly()
@@ -134,7 +137,7 @@ class QuestionController {
             respond question.errors, view:'edit'
             return
         }
-
+        question.views++
         question.save flush:true
 
         request.withFormat {
@@ -174,7 +177,7 @@ class QuestionController {
     @Secured(['ROLE_ANONYMOUS'])
     @Transactional
     def setResolved(Question question) {
-        question.resolved = true
+
 
         if (question == null) {
             transactionStatus.setRollbackOnly()
@@ -187,7 +190,7 @@ class QuestionController {
             respond question.errors, view:'edit'
             return
         }
-
+        question.resolved = true
         question.save flush:true
 
         request.withFormat {
