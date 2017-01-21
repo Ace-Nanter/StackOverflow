@@ -1,37 +1,35 @@
 <html>
-	<head>
-		<meta name="layout" content="${layoutUi}"/>
-		<s2ui:title messageCode='default.create.label' entityNameMessageCode='user.label' entityNameDefault='User'/>
-	</head>
-	<body>
-		<h3><g:message code='default.create.label' args='[entityName]'/></h3>
-		<s2ui:form type='save' beanName='user' focus='username'>
-			<s2ui:tabs elementId='tabs' height='375' data='${tabData}'>
-				<s2ui:tab name='userinfo' height='280'>
-					<table>
-					<tbody>
-						<s2ui:textFieldRow name='username' labelCodeDefault='Username'/>
-						<s2ui:passwordFieldRow name='password' labelCodeDefault='Password'/>
-						<s2ui:checkboxRow name='enabled' labelCodeDefault='Enabled'/>
-						<s2ui:checkboxRow name='accountExpired' labelCodeDefault='Account Expired'/>
-						<s2ui:checkboxRow name='accountLocked' labelCodeDefault='Account Locked'/>
-						<s2ui:checkboxRow name='passwordExpired' labelCodeDefault='Password Expired'/>
-					</tbody>
-					</table>
-				</s2ui:tab>
-				<s2ui:tab name='roles' height='280'>
-					<g:each var='role' in='${authorityList}'>
-					<div>
-						<g:set var='authority' value='${uiPropertiesStrategy.getProperty(role, 'authority')}'/>
-						<g:checkBox name='${authority}'/>
-						<g:link controller='role' action='edit' id='${role.id}'>${authority}</g:link>
-					</div>
-					</g:each>
-				</s2ui:tab>
-			</s2ui:tabs>
-			<div style='float:left; margin-top: 10px;'>
-				<s2ui:submitButton/>
-			</div>
-		</s2ui:form>
-	</body>
+<head>
+    <meta name="layout" content="${gspLayout ?: 'main'}"/>
+    <title><g:message code="login.title.title" default="Log in - Stack Overflow"/></title>
+    <asset:stylesheet src="userRegistration.css.css"/>
+</head>
+<body>
+<div class="container top-margin-50">
+    <div id="logbox" class="top-margin-50">
+        <form action="${postUrl ?: '/user/save'}" method="POST" name="saveForm" id="saveForm" autocomplete="off">
+            <h1><g:message code='register.title.label' default="Create a new account"/></h1>
+
+            <input name="${usernameParameter ?: 'username'}" type="text" id="username" pattern="^[\w]{3,16}$" autofocus="autofocus"
+                   class="input pass" placeholder="${message(code: 'login.field.username', default: 'Enter your username')}"/>
+
+
+            <input name="${emailParameter ?: 'email'}" type="email" id="email"
+                   class="input pass" placeholder="${message(code: 'login.field.email', default: 'Enter your email')}"/>
+
+            <input name="${passwordParameter ?: 'password'}" type="password" required="required" id="password"
+                   placeholder="${message(code: 'login.field.password', default: 'Enter your username')}" class="input pass"/>
+
+            <input type="submit" id="submit" value="${message(code: 'register.input.submit', default: 'Create an account')}" class="inputButton"/>
+            <g:hiddenField name="ROLE_USER" value="on"/>
+
+            <div class="text-center">
+                <g:link controller="user" action="create">
+                    <g:message code="register.link.login" default="Register a new account"/>
+                </g:link>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
 </html>

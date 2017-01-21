@@ -108,11 +108,6 @@ class BootStrap {
         assert UserRole.count() == 1
         assert Tag.count() == 1
     }
-    def destroy = {
-    }
 
-    // TODO : créer un stub de données. Penser à mettre un if(mode = dev)
-
-
-
+    def destroy = { }
 }

@@ -7,60 +7,49 @@
 	</sec:ifAllGranted>
 </sec:ifNotSwitched>
 <html>
-	<head>
-		<meta name="layout" content="${layoutUi}"/>
-		<s2ui:title messageCode='default.edit.label' entityNameMessageCode='user.label' entityNameDefault='User'/>
-	</head>
-	<body>
-		<h3><g:message code='default.edit.label' args='[entityName]'/></h3>
-		<s2ui:form type='update' beanName='user' focus='username' class='button-style'>
-			<s2ui:tabs elementId='tabs' height='375' data='${tabData}'>
-				<s2ui:tab name='userinfo' height='275'>
-					<table>
-					<tbody>
-						<s2ui:textFieldRow name='username' labelCodeDefault='Username'/>
-						<s2ui:passwordFieldRow name='password' labelCodeDefault='Password'/>
-						<s2ui:checkboxRow name='enabled' labelCodeDefault='Enabled'/>
-						<s2ui:checkboxRow name='accountExpired' labelCodeDefault='Account Expired'/>
-						<s2ui:checkboxRow name='accountLocked' labelCodeDefault='Account Locked'/>
-						<s2ui:checkboxRow name='passwordExpired' labelCodeDefault='Password Expired'/>
-					</tbody>
-					</table>
-				</s2ui:tab>
-				<s2ui:tab name='roles' height='275'>
-					<g:each var='entry' in='${roleMap}'>
-					<g:set var='roleName' value='${uiPropertiesStrategy.getProperty(entry.key, 'authority')}'/>
-					<div>
-						<g:checkBox name='${roleName}' value='${entry.value}'/>
-						<g:link controller='role' action='edit' id='${entry.key.id}'>${roleName}</g:link>
-					</div>
-					</g:each>
-				</s2ui:tab>
-			</s2ui:tabs>
-			<div style="float:left; margin-top: 10px;">
-			<s2ui:submitButton/>
-			<g:if test='${user}'>
-			<s2ui:deleteButton/>
-			</g:if>
-			<g:if test='${canRunAs}'>
-			<a id="runAsButton">${message(code:'spring.security.ui.runas.submit')}</a>
-			</g:if>
+<head>
+	<meta name="layout" content="${gspLayout ?: 'main'}"/>
+	<title><g:message code="login.title.title" default="Log in - Stack Overflow"/></title>
+</head>
+<body>
+<div class="container top-margin-50">
+	<div class="row">
+		<div class="col-md-10">
+			<g:isOwner owner="${user}">
+				<input name="${usernameParameter ?: 'username'}" type="text" id="username" pattern="^[\w]{3,16}$" autofocus="autofocus"
+					   class="input pass" placeholder="${message(code: 'login.field.username', default: 'Enter your username')}"/>
+			</g:isOwner>
+			<g:isNotOwner>
+				<h1><g:message code="user.profile.title" args="${user.username}" default="${user.username}'s profile"/></h1>
+			</g:isNotOwner>
+			<br/>
+			${user.username}
+
 		</div>
-		</s2ui:form>
-		<g:if test='${user}'>
-		<s2ui:deleteButtonForm instanceId='${user.id}'/>
-		</g:if>
-		<g:if test='${canRunAs}'>
-		<form name="runAsForm" action="${request.contextPath}${securityConfig.switchUser.switchUserUrl}" method='post'>
-			<g:hiddenField name='${securityConfig.switchUser.usernameParameter}' value='${username}'/>
-			<input type="submit" class="s2ui_hidden_button"/>
+	</div>
+	<div id="logbox" class="top-margin-50">
+		<form action="${postUrl ?: '/user/save'}" method="POST" name="saveForm" id="saveForm" autocomplete="off">
+			<h1><g:message code='register.title.label' default="Create a new account"/></h1>
+
+
+
+
+			<input name="${emailParameter ?: 'email'}" type="email" id="email"
+				   class="input pass" placeholder="${message(code: 'login.field.email', default: 'Enter your email')}"/>
+
+			<input name="${passwordParameter ?: 'password'}" type="password" required="required" id="password"
+				   placeholder="${message(code: 'login.field.password', default: 'Enter your username')}" class="input pass"/>
+
+			<input type="submit" id="submit" value="${message(code: 'register.input.submit', default: 'Create an account')}" class="inputButton"/>
+			<g:hiddenField name="ROLE_USER" value="on"/>
+
+			<div class="text-center">
+				<g:link controller="user" action="create">
+					<g:message code="register.link.login" default="Register a new account"/>
+				</g:link>
+			</div>
 		</form>
-		</g:if>
-	<s2ui:documentReady>
-	$("#runAsButton").button();
-	$('#runAsButton').bind('click', function() {
-		document.forms.runAsForm.submit();
-	});
-	</s2ui:documentReady>
-	</body>
+	</div>
+</div>
+</body>
 </html>
