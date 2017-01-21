@@ -60,9 +60,6 @@ class AnswerController {
 
     @Transactional
     def upVote(Answer answer){
-        answer.vote++
-        answer.user.reputation += User.REPUTATION_COEF
-
         if (answer == null) {
             transactionStatus.setRollbackOnly()
             notFound()
@@ -74,6 +71,10 @@ class AnswerController {
             respond answer.errors, view:'edit'
             return
         }
+
+        answer.vote++
+        answer.user.reputation += User.REPUTATION_COEF
+        answer.user.save flush:true
 
         answer.save flush:true
 
@@ -88,9 +89,6 @@ class AnswerController {
 
     @Transactional
     def downVote(Answer answer) {
-        answer.vote--
-        answer.user.reputation -= User.REPUTATION_COEF
-
         if (answer == null) {
             transactionStatus.setRollbackOnly()
             notFound()
@@ -103,12 +101,43 @@ class AnswerController {
             return
         }
 
+        answer.vote--
+        answer.user.reputation -= User.REPUTATION_COEF
+        answer.user.save flush:true
+
         answer.save flush:true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'answer.label', default: 'Answer'), answer.id])
                 redirect controller: 'Question', action: 'show', id: answer.question.id
+            }
+            '*'{ respond answer, [status: OK] }
+        }
+    }
+
+    @Transactional
+    def updateText(Answer answer, String text) {
+        if (answer == null) {
+            transactionStatus.setRollbackOnly()
+            notFound()
+            return
+        }
+
+        if (answer.hasErrors()) {
+            transactionStatus.setRollbackOnly()
+            respond answer.errors, view:'edit'
+            return
+        }
+
+        answer.text = text
+        answer.edited = new Date()
+        answer.save flush:true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'answer.label', default: 'Answer'), answer.id])
+                redirect answer
             }
             '*'{ respond answer, [status: OK] }
         }
@@ -145,10 +174,7 @@ class AnswerController {
     }
 
     @Transactional
-    def update(Answer answer, String text) {
-        answer.text = text
-        answer.edited = new Date()
-
+    def update(Answer answer) {
         if (answer == null) {
             transactionStatus.setRollbackOnly()
             notFound()
@@ -160,8 +186,6 @@ class AnswerController {
             respond answer.errors, view:'edit'
             return
         }
-
-        answer.save flush:true
 
         request.withFormat {
             form multipartForm {

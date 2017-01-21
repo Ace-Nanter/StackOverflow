@@ -9,10 +9,23 @@ class CommentControllerSpec extends Specification {
 
     def populateValidParams(params) {
         assert params != null
+        def user = new User(username: 'me', password: 'password', email: 'test.user@domain.com')
 
-        // TODO: Populate valid properties like...
-        //params["name"] = 'someValidName'
-        assert false, "TODO: Provide a populateValidParams() implementation for this generated test suite"
+        def question = new Question(text: "Everything is said in the title : what is the meaning of life ?",
+                vote: 0,
+                created: new Date(),
+                edited: new Date(),
+                title: "What is the meaning of life ?",
+                views: 0,
+                resolved: false,
+                user: user)
+
+        params["text"] = "test"
+        params["vote"] = 2
+        params["created"] = new Date()
+        params["edited"] = new Date()
+        params["user"] = user
+        params["question"] = question
     }
 
     void "Test the index action returns the correct model"() {

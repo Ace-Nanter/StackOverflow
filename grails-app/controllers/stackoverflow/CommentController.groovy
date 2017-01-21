@@ -63,9 +63,7 @@ class CommentController {
     @Secured(['ROLE_ANONYMOUS'])
     @Transactional
     def upVote(Comment comment){
-        def idQuestion = comment.answer!=null?comment.answer.question.id:comment.question.id
-        comment.vote++
-        comment.user.reputation += User.REPUTATION_COEF
+
 
         if (comment == null) {
             transactionStatus.setRollbackOnly()
@@ -78,6 +76,11 @@ class CommentController {
             respond comment.errors, view:'edit'
             return
         }
+
+        def idQuestion = comment.answer!=null?comment.answer.question.id:comment.question.id
+        comment.vote++
+        comment.user.reputation += User.REPUTATION_COEF
+        comment.user.save flush: true
 
         comment.save flush:true
 
@@ -93,9 +96,7 @@ class CommentController {
     @Secured(['ROLE_ANONYMOUS'])
     @Transactional
     def downVote(Comment comment) {
-        def idQuestion = comment.answer!=null?comment.answer.question.id:comment.question.id
-        comment.vote--
-        comment.user.reputation -= User.REPUTATION_COEF
+
 
         if (comment == null) {
             transactionStatus.setRollbackOnly()
@@ -109,6 +110,10 @@ class CommentController {
             return
         }
 
+        def idQuestion = comment.answer!=null?comment.answer.question.id:comment.question.id
+        comment.vote--
+        comment.user.reputation -= User.REPUTATION_COEF
+        comment.user.save flush: true
         comment.save flush:true
 
         request.withFormat {

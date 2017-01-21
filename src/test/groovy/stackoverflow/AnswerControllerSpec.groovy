@@ -10,9 +10,23 @@ class AnswerControllerSpec extends Specification {
     def populateValidParams(params) {
         assert params != null
 
-        // TODO: Populate valid properties like...
-        //params["name"] = 'someValidName'
-        assert false, "TODO: Provide a populateValidParams() implementation for this generated test suite"
+        def user = new User(username: 'me', password: 'password', email: 'test.user@domain.com')
+
+        def question = new Question(text: "Everything is said in the title : what is the meaning of life ?",
+                vote: 0,
+                created: new Date(),
+                edited: new Date(),
+                title: "What is the meaning of life ?",
+                views: 0,
+                resolved: false,
+                user: user)
+
+        params["text"] = "test"
+        params["vote"] = 2
+        params["created"] = new Date()
+        params["edited"] = new Date()
+        params["user"] = user
+        params["question"] = question
     }
 
     void "Test the index action returns the correct model"() {
@@ -149,4 +163,51 @@ class AnswerControllerSpec extends Specification {
             response.redirectedUrl == '/answer/index'
             flash.message != null
     }
+/*
+    void "Test downVote and upVote"(){
+        when:"downVote is called for a domain instance that doesn't exist"
+            request.contentType = FORM_CONTENT_TYPE
+            request.method = 'PUT'
+            controller.downVote(null)
+
+        then:"A 404 error is returned"
+            response.redirectedUrl == '/answer/index'
+            flash.message != null
+
+        when:"upVote is called for a domain instance that doesn't exist"
+            response.reset()
+            controller.upVote(null)
+
+        then:"A 404 error is returned"
+            response.redirectedUrl == '/answer/index'
+            flash.message != null
+
+        when:"An invalid domain instance is passed to the upVote action"
+            response.reset()
+            populateValidParams(params)
+            def answer = new Answer(params).save(flush: true)
+            controller.upVote(answer)
+
+        then:"The edit view is rendered again with the invalid instance"
+            Answer.get(answer.id).vote == answer.vote+1
+
+        when:"An invalid domain instance is passed to the downVote action"
+            response.reset()
+            populateValidParams(params)
+            answer = new Answer(params).save(flush: true)
+            controller.downVote(answer)
+
+        then:"The edit view is rendered again with the invalid instance"
+            Answer.get(answer.id).vote == answer.vote+1
+
+    }
+
+    void "Test change text"(){
+
+    }
+
+    void "Test add answer"(){
+
+    }
+    */
 }
