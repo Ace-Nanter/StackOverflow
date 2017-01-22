@@ -29,13 +29,6 @@ body {
     white-space: normal;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
-}
-
 h2 {
     margin-top : 1em;
     margin-bottom : 1em;
@@ -59,4 +52,14 @@ h2 {
 
 .top-margin-50 {
     margin-top : 50px;
+}
+
+.right-margin-10 {
+    margin-right: 10px;
+}
+
+.big-textarea {
+    width: 100%;
+    outline: none;
+    resize: none;
 }

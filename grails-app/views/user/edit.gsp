@@ -9,7 +9,7 @@
 <html>
 <head>
 	<meta name="layout" content="${gspLayout ?: 'main'}"/>
-	<title><g:message code="login.title.title" default="Log in - Stack Overflow"/></title>
+	<title><g:message code="user.page.title" args="[user.username]" default="{0}"/> - Stack Overflow</title>
 </head>
 <body>
 <div class="container top-margin-50">
@@ -33,17 +33,16 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-4" style="display: inline-block">
-                                <label class="col-md-4">${message(code:'user.edit.username', default: 'Enter a new username :')}</label> <br/>
-                                <label class="col-md-4">${message(code:'user.edit.email', default: 'Enter a new email :')}</label> <br/>
-                                <label class="col-md-4">${message(code: 'user.edit.password', default: 'Enter a new password')}</label> <br/>
+                                <label>${message(code:'user.edit.username', default: 'Enter a new username :')}</label> <br/>
+                                <label>${message(code:'user.edit.email', default: 'Enter a new email :')}</label> <br/>
+                                <label>${message(code: 'user.edit.password', default: 'Enter a new password')}</label> <br/>
                             </div>
                             <div class="col-md-6" style="display: inline-block">
                                 <input name="${usernameParameter ?: 'username'}" type="text" id="username" pattern="^[\w]{3,16}$" autofocus="autofocus"
-                                       class="col-md-8" placeholder="${user.username}"/> <br />
+                                       placeholder="${user.username}"/> <br />
                                 <input name="${emailParameter ?: 'email'}" type="email" id="email"
-                                       class="col-md-8" placeholder="${user.email}"/> <br />
-                                <input name="${passwordParameter ?: 'password'}" type="password" id="password"
-                                       class="col-md-8"/> <br />
+                                       placeholder="${user.email}"/> <br />
+                                <input name="${passwordParameter ?: 'password'}" type="password" id="password"/> <br />
                             </div>
                         </div>
                         <hr/>
@@ -126,7 +125,7 @@
                             <td>
                                 <g:each in="${question.tags}" var="tag">
                                     <g:link controller="tag" action="show" id="${tag.id}">
-                                        <div class="label label-default">
+                                        <div class="label label-default right-margin-10">
                                             ${tag.name}
                                         </div>
                                     </g:link>
@@ -167,7 +166,7 @@
                         <td>
                             <g:each in="${answer.question.tags}" var="tag">
                                 <g:link controller="tag" action="show" id="${tag.id}">
-                                    <div class="label label-default">
+                                    <div class="label label-default right-margin-10">
                                         ${tag.name}
                                     </div>
                                 </g:link>
@@ -187,7 +186,7 @@
         </div>
         <div class="panel-body">
             <g:each in="${user.badges}" var="badge">
-                <span class="label label-success" style="margin-left: 10px;">
+                <span class="label label-success right-margin-10">
                     ${badge.name}
                 </span>
             </g:each>

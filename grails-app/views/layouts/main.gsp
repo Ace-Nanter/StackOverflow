@@ -36,7 +36,6 @@
                         </g:link>
                         <g:link class="navbar-brand" url="/logout">${message(code: 'menu.user.signout', default: 'Sign out')}</g:link>
                     </sec:ifLoggedIn>
-
                 </div>
             </div>
         </div>
