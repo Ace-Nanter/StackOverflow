@@ -14,57 +14,96 @@
 <body>
 <div class="container top-margin-50">
 
-    <h1 class="text-center"><g:message code="user.profile.title" args="[user.username]" default="${user.username}'s profile"/></h1>
+    <h1 class="text-center">
+        <g:message code="user.profile.title" args="[user.username]" default="${user.username}'s profile"/>
+        <span class="badge">${user.reputation}</span>
+    </h1>
 
-    <!-- Reputation -->
-    <div>
-        <label>Reputation</label>
-        <span class="label label-success">
-            ${user.reputation}
-        </span>
 
-        <br/>
-        <label>Badges</label>
-    </div>
-
-    <!-- User information -->
-    <g:isOwner owner="${user}">
-        <div class="panel panel-default top-margin-50">
-            <div class="panel-heading">
-                <h3>User information</h3>
-            </div>
-            <div class="panel-body">
-                <form>
-                    <div class="row">
-                        <label class="col-md-4">Username : </label>
-                        <input name="${usernameParameter ?: 'username'}" type="text" id="username" pattern="^[\w]{3,16}$" autofocus="autofocus"
-                               class="col-md-8" placeholder="${message(code: 'login.field.username', default: 'Enter your username')}"/>
-
+    <sec:ifLoggedIn>
+        <g:form controller="user" action="update" method="POST" name="updateForm" autocomplete="off">
+            <g:hiddenField name="id" value="${user.id}"/>
+            <g:hiddenField name="version" value="${user.version}"/>
+            <!-- User information -->
+            <g:isOwner owner="${user}">
+                <div class="panel panel-primary top-margin-50">
+                    <div class="panel-heading">
+                        <h3>${message(code: 'user.edit.title', default: 'Update user information')}</h3>
                     </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label>Email : </label>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4" style="display: inline-block">
+                                <label class="col-md-4">${message(code:'user.edit.username', default: 'Enter a new username :')}</label> <br/>
+                                <label class="col-md-4">${message(code:'user.edit.email', default: 'Enter a new email :')}</label> <br/>
+                                <label class="col-md-4">${message(code: 'user.edit.password', default: 'Enter a new password')}</label> <br/>
+                            </div>
+                            <div class="col-md-6" style="display: inline-block">
+                                <input name="${usernameParameter ?: 'username'}" type="text" id="username" pattern="^[\w]{3,16}$" autofocus="autofocus"
+                                       class="col-md-8" placeholder="${user.username}"/> <br />
+                                <input name="${emailParameter ?: 'email'}" type="email" id="email"
+                                       class="col-md-8" placeholder="${user.email}"/> <br />
+                                <input name="${passwordParameter ?: 'password'}" type="password" id="password"
+                                       class="col-md-8"/> <br />
+                            </div>
                         </div>
-                        <div class="col-md-8">
-                            <input name="${emailParameter ?: 'email'}" type="email" id="email"
-                                   placeholder="${message(code: 'login.field.email', default: 'Enter your email')}"/>
+                        <hr/>
+                        <div class="row text-center">
+                            <button type="submit" class="btn btn-warning text-center">
+                                <strong>
+                                    ${message(code: 'user.update.button', default: 'Update the user')}
+                                </strong>
+                            </button>
                         </div>
+                    </div>
+                </div>
+            </g:isOwner>
 
+            <!-- Admin Options -->
+            <sec:ifAllGranted roles="ROLE_ADMIN">
+                <div class="panel panel-danger top-margin-50">
+                    <div class="panel-heading">
+                        <h3>${message(code: 'user.admin.title')}</h3>
                     </div>
-                    <div class="row">
-                        <label class="col-md-4">Password</label>
-                        <input name="${passwordParameter ?: 'password'}" type="password" required="required" id="password"
-                               placeholder="${message(code: 'login.field.password', default: 'Enter your username')}" class="col-md-8"/>
+                    <div class="panel-body">
+                        <h4 class="text-center">${message(code: 'user.role.title', default: 'Choose a role')}</h4>
+                        <div class="row text-center top-margin-50">
+                            <div class="col-xs-6">
+                                <input type="checkbox" name="ROLE_USER">
+                                <label>${message(code: 'user.role.user', default: 'User')}</label>
+                            </div>
+                            <div class="col-xs-6">
+                                <input type="checkbox" name="ROLE_ADMIN">
+                                <label>${message(code: 'user.role.admin', default: 'Administrator')}</label>
+                            </div>
+                        </div>
+                        <hr/>
+                        <div class="row text-center">
+                            <div class="col-xs-6">
+                                <button type="submit" class="btn btn-warning text-center">
+                                    <strong>
+                                        ${message(code: 'user.update.button', default: 'Update the user')}
+                                    </strong>
+                                </button>
+                            </div>
+                            <div class="col-xs-6">
+                                <button type="button" class="btn btn-danger text-center">
+                                    <span class="glyphicon glyphicon-minus"></span>
+                                    <span><strong>
+                                        ${message(code: 'user.delete.button')}
+                                    </strong></span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                </form>
-            </div>
-        </div>
-    </g:isOwner>
+                </div>
+            </sec:ifAllGranted>
+        </g:form>
+    </sec:ifLoggedIn>
 
     <!-- Questions -->
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3>Questions</h3>
+            <h3>${message(code: 'user.question.title', default: 'Questions asked')}</h3>
         </div>
         <div class="panel-body">
             <table class="table">
@@ -128,6 +167,18 @@
             </table>
         </div>
     </div>
+
+    <!-- Badges -->
+    <div class="col-md-6" style="display: inline-block">
+        <h3 style="display: inline-block">${message(code: 'user.profile.badges', default: 'User badges: ')}</h3>
+        <g:each in="${user.badges}" var="badge">
+            <span class="label label-primary">
+                ${badge.name}
+            </span>
+        </g:each>
+    </div>
+
+
 </div>
 </body>
 </html>
