@@ -19,4 +19,8 @@ class Post {
 
         edited nullable: true
     }
+
+    static mapping = {
+        text sqlType: 'longtext'
+    }
 }

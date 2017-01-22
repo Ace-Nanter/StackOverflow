@@ -17,7 +17,7 @@ class Badge {
         new Badge(name:"Comment a question").save()
         new Badge(name:"Comment an answer").save()
         new Badge(name:"Ask 3 questions").save()
-        new Badge(name:"Get 50 reputation points").save()
+        new Badge(name:"Got 50 reputation points once").save()
     }
 
     static User controlBadges(User user) {
