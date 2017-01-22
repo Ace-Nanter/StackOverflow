@@ -34,22 +34,42 @@
                         <g:each in="${questionList}" var="q">
                             <tr>
                                 <td class="text-center">
-                                    <strong>${q.vote}</strong>
+                                    <h4><strong>${q.vote}</strong></h4>
                                 </td>
                                 <td class="text-center">
-                                    <g:link action="show" id="${q.id}">${q.title}</g:link>
+                                    <h4><g:link action="show" id="${q.id}">${q.title}</g:link></h4>
                                 </td>
                                 <td class="text-center">
                                     <g:each in="${q.tags}" var="tag">
-                                        <g:link controller="tag" action="show" id="${tag.id}">
-                                            <div class="label label-default right-margin-10">
-                                                ${tag.name}
-                                            </div>
-                                            <div class="label label-default right-margin-10">
-                                                ${tag.name}
-                                            </div>
-                                        </g:link>
+                                        <h4 style="display:inline-block;">
+                                            <g:link controller="tag" action="show" id="${tag.id}">
+                                                <div class="label label-default right-margin-10">
+                                                    ${tag.name}
+                                                </div>
+                                            </g:link>
+                                        </h4>
                                     </g:each>
+                                </td>
+                                <td>
+                                    <h4>
+                                        <g:isOwner owner="${q.user}">
+                                            <g:link class="btn btn-primary" action="edit" id="${q.id}">
+                                                <span class="glyphicon glyphicon-pencil"/>
+                                            </g:link>
+                                        </g:isOwner>
+                                    </h4>
+                                </td>
+                                <td>
+                                    <h4>
+                                        <sec:ifAllGranted roles="ROLE_ADMIN">
+                                            <g:form action="delete" controller="question" method="delete">
+                                                <g:hiddenField name="id" value="${q.id}"/>
+                                                <button class="btn btn-danger">
+                                                    <span class="glyphicon glyphicon-trash"/>
+                                                </button>
+                                            </g:form>
+                                        </sec:ifAllGranted>
+                                    </h4>
                                 </td>
                             </tr>
                         </g:each>

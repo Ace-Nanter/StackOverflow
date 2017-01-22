@@ -22,7 +22,8 @@ class QuestionController {
     }
 
     def create() {
-        respond new Question(params)
+        def listTags = Tag.list();
+        respond new Question(params), model:[listTags: listTags]
     }
 
     @Transactional
@@ -35,6 +36,13 @@ class QuestionController {
                 created: new Date(),
                 user: (User)getAuthenticatedUser()
         )
+
+        def tags = []
+        for(idTag in params.tags) {
+            tags << Tag.get(idTag)
+        }
+
+        question.tags = tags
 
         if (question == null) {
             transactionStatus.setRollbackOnly()

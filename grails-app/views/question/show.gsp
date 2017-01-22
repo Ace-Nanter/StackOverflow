@@ -16,8 +16,25 @@
             <div class="alert alert-warning text-center" role="status">${flash.message}</div>
         </g:if>
 
-        <div>
-            <p>${question.text}</p>
+        <div class="row">
+            <div class="col-xs-1">
+            <!-- Part on the right for voting -->
+                <g:form controller="question" action="upVote" method="PUT" resource="${question}" >
+                    <button type="submit">
+                        <span class="glyphicon glyphicon-triangle-top"></span>
+                    </button>
+                </g:form>
+                <span class="text-center">${question.vote}</span>     <!-- Display the value -->
+                <g:form controller="answer" action="downVote" method="PUT" resource="${question}" >
+                    <button type="submit">
+                        <span class="glyphicon glyphicon-triangle-bottom"></span>
+                    </button>
+                </g:form>
+            </div>
+            <div class="col-xs-11">
+                <!-- Display of the answer -->
+                <p>${question.text}</p>
+            </div>
         </div>
         <hr/>
         <g:each in="${question.answers}" var="a">

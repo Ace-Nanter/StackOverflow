@@ -34,13 +34,23 @@
                           placeholder="${message(code:'question.label.text', default: 'Describe your question here...')}"></textarea>
             </div>
 
-            <!-- Tags -->
-
-
+            <!-- Tag choice -->
+            <div class="row top-margin-50">
+            <g:each in="${listTags}" var="tag">
+                <div class="right-margin-10 col-xs-3">
+                    <input type="checkbox" name="tags" value="${tag.id}">
+                    <h3 style="display: inline-block">
+                        <span class="label label-default right-margin-10">
+                            ${tag.name}
+                        </span>
+                    </h3>
+                </div>
+            </g:each>
+            </div>
             <div class="text-center top-margin-50">
                 <button type="submit" class="btn btn-success">
                     <span class="glyphicon glyphicon-plus"></span>
-                    <span class="text-center">Add a question</span>
+                    <span class="text-center">${message(code:'question.button.new', default: 'Add a new question')}</span>
                 </button>
             </div>
         </g:form>

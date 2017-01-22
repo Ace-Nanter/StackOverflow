@@ -3,38 +3,42 @@
     <head>
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'question.label', default: 'Question')}" />
-        <title><g:message code="default.edit.label" args="[entityName]" /></title>
+        <title><g:message code="default.create.label" args="[entityName]" /></title>
     </head>
     <body>
-        <a href="#edit-question" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-        <div class="nav" role="navigation">
-            <ul>
-                <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-                <li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-                <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-            </ul>
-        </div>
-        <div id="edit-question" class="content scaffold-edit" role="main">
-            <h1><g:message code="default.edit.label" args="[entityName]" /></h1>
+        <div class="container">
+            <div class="jumbotron">
+                <h1 class="text-center"><g:message code="question.create.title"/></h1>
+            </div>
+
             <g:if test="${flash.message}">
-            <div class="message" role="status">${flash.message}</div>
+                <div class="alert alert-warning text-center" role="status">${flash.message}</div>
             </g:if>
+
             <g:hasErrors bean="${this.question}">
-            <ul class="errors" role="alert">
-                <g:eachError bean="${this.question}" var="error">
-                <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
-                </g:eachError>
-            </ul>
+                <ul class="errors" role="alert">
+                    <g:eachError bean="${this.question}" var="error">
+                        <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
+                    </g:eachError>
+                </ul>
             </g:hasErrors>
-            <g:form controller="question" action="updateText" resource="${this.question}" method="PUT">
-                <g:hiddenField name="version" value="${this.question?.version}" />
-                <fieldset class="form">
-                    <g:textField name="title" value="${this.question?.title}" />
-                    <g:textField name="text" value="${this.question?.text}" />
-                </fieldset>
-                <fieldset class="buttons">
-                    <input class="save" type="submit" value="${message(code: 'default.button.update.label', default: 'Update')}" />
-                </fieldset>
+
+            <g:form controller="question" action="addQuestion" method="PUT">
+                <h3 class="text-center top-margin-50">${message(code:'question.label.title', default: 'Question title')}</h3>
+                <div class="row text-center top-margin-50">
+                    <input name="${titleParameter ?: 'title'}" type="text" autofocus="autofocus" class="text-center big-textarea"
+                           placeholder="${question.title}" autocomplete="off"/>
+                </div>
+                <div class="row top-margin-50">
+                    <textarea name="${textParameter ?: 'text'}" class="big-textarea" rows="10" autocomplete="off"
+                              placeholder="${question.text}"></textarea>
+                </div>
+
+                <div class="text-center top-margin-50">
+                    <button type="submit" class="btn btn-success">
+                        <span class="text-center">${message(code: 'question.button.edit', default: 'Edit question')}</span>
+                    </button>
+                </div>
             </g:form>
         </div>
     </body>
