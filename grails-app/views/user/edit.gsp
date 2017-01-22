@@ -101,7 +101,7 @@
     </sec:ifLoggedIn>
 
     <!-- Questions -->
-    <div class="panel panel-default">
+    <div class="panel panel-info">
         <div class="panel-heading">
             <h3>${message(code: 'user.question.title', default: 'Questions asked')}</h3>
         </div>
@@ -109,21 +109,27 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Votes</th>
-                        <th>Question</th>
-                        <th>Tags</th>
+                        <th class="text-center">Votes</th>
+                        <th class="text-center">Question</th>
+                        <th class="text-center">Tags</th>
                     </tr>
                 </thead>
                 <tbody>
                     <g:each in="${user.questions}" var="question">
-                        <tr>
+                        <tr class="text-center">
                             <td>${question.vote}</td>
-                            <td>${question.title}</td>
+                            <td>
+                                <g:link controller="question" action="show" id="${question.id}">
+                                ${question.title}
+                                </g:link>
+                            </td>
                             <td>
                                 <g:each in="${question.tags}" var="tag">
-                                    <div class="label label-default">
-                                        ${tag.name}
-                                    </div>
+                                    <g:link controller="tag" action="show" id="${tag.id}">
+                                        <div class="label label-default">
+                                            ${tag.name}
+                                        </div>
+                                    </g:link>
                                 </g:each>
                             </td>
                         </tr>
@@ -134,31 +140,37 @@
     </div>
 
     <!-- Answers -->
-    <div class="panel panel-default">
+    <div class="panel panel-info">
         <div class="panel-heading">
             <h3>Answers</h3>
         </div>
         <div class="panel-body">
             <table class="table">
                 <thead>
-                <tr>
-                    <th>Votes answers</th>
-                    <th>Votes question</th>
-                    <th>Question</th>
-                    <th>Tags</th>
-                </tr>
+                    <tr>
+                        <th class="text-center">Votes answers</th>
+                        <th class="text-center">Votes question</th>
+                        <th class="text-center">Question</th>
+                        <th class="text-center">Tags</th>
+                    </tr>
                 </thead>
                 <tbody>
                 <g:each in="${user.answers}" var="answer">
-                    <tr>
+                    <tr class="text-center">
                         <td>${answer.vote}</td>
                         <td>${answer.question.vote}</td>
-                        <td>${answer.question.title}</td>
+                        <td>
+                            <g:link controller="question" action="show" id="${answer.question.id}">
+                                ${answer.question.title}
+                            </g:link>
+                        </td>
                         <td>
                             <g:each in="${answer.question.tags}" var="tag">
-                                <div class="label label-default">
-                                    ${tag.name}
-                                </div>
+                                <g:link controller="tag" action="show" id="${tag.id}">
+                                    <div class="label label-default">
+                                        ${tag.name}
+                                    </div>
+                                </g:link>
                             </g:each>
                         </td>
                     </tr>
@@ -169,16 +181,18 @@
     </div>
 
     <!-- Badges -->
-    <div class="col-md-6" style="display: inline-block">
-        <h3 style="display: inline-block">${message(code: 'user.profile.badges', default: 'User badges: ')}</h3>
-        <g:each in="${user.badges}" var="badge">
-            <span class="label label-primary">
-                ${badge.name}
-            </span>
-        </g:each>
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3>${message(code: 'user.badges.title')}</h3>
+        </div>
+        <div class="panel-body">
+            <g:each in="${user.badges}" var="badge">
+                <span class="label label-success" style="margin-left: 10px;">
+                    ${badge.name}
+                </span>
+            </g:each>
+        </div>
     </div>
-
-
 </div>
 </body>
 </html>
