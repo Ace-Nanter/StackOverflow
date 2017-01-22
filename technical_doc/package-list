@@ -1,0 +1,13 @@
+build.resources.main
+build.resources.main.spring
+grails-app.conf
+grails-app.conf.spring
+grails-app.controllers.stackoverflow
+grails-app.controllers.stackoverflow.role
+grails-app.controllers.stackoverflow.user
+grails-app.domain.stackoverflow
+grails-app.init.stackoverflow
+grails-app.taglib.stackoverflow
+out.production.StackOverflow
+out.production.StackOverflow.spring
+src.test.groovy.stackoverflow

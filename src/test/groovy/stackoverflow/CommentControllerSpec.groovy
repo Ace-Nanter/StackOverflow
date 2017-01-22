@@ -200,4 +200,24 @@ class CommentControllerSpec extends Specification {
         Comment.get(comment.id).vote == comment.vote
 
     }
+
+    void "Test change text"(){
+        when:"change text is called for a domain instance that doesn't exist"
+        request.contentType = FORM_CONTENT_TYPE
+        request.method = 'PUT'
+        controller.updateText(null,null)
+
+        then:"A 404 error is returned"
+        response.redirectedUrl == '/comment/index'
+        flash.message != null
+
+        when:"An invalid domain instance is passed to the upVote action"
+        response.reset()
+        populateValidParams(params)
+        def comment = new Comment(params).save(flush: true)
+        controller.updateText(comment,"test")
+
+        then:"The edit view is rendered again with the invalid instance"
+        Comment.get(comment.id).text == "test"
+    }
 }

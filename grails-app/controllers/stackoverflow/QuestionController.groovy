@@ -78,6 +78,7 @@ class QuestionController {
 
         question.vote++
         question.user.reputation += User.REPUTATION_COEF
+        Badge.controlBadges(question.user)
         question.user.save()
         question.save flush:true
 
@@ -107,6 +108,7 @@ class QuestionController {
 
         question.vote--
         question.user.reputation -= User.REPUTATION_COEF
+        Badge.controlBadges(question.user)
         question.user.save()
         question.save flush:true
 

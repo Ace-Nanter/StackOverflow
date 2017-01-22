@@ -7,7 +7,6 @@ class Badge {
     static belongsTo = User
     static hasMany = [users: User]
 
-
     static constraints = {
         users nullable: true
     }
@@ -18,6 +17,7 @@ class Badge {
         new Badge(name:"Comment a question").save()
         new Badge(name:"Comment an answer").save()
         new Badge(name:"Ask 3 questions").save()
+        new Badge(name:"Get 50 reputation points").save()
     }
 
     static User controlBadges(User user) {
@@ -44,6 +44,10 @@ class Badge {
 
             if (user.comments != null && user.comments.count({ it.answer == null }) == 1) {
                 user.addToBadges(findByName("Comment a question"))
+            }
+
+            if (user.reputation >= 50) {
+                user.addToBadges(findByName("Got 50 reputation points once"))
             }
 
             user.badges = user.badges.unique { it.name }
