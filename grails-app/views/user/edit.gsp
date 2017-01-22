@@ -142,7 +142,7 @@
     <!-- Answers -->
     <div class="panel panel-info">
         <div class="panel-heading">
-            <h3>Answers</h3>
+            <h3>${message(code:'user.answer.title', default:'Answers')}</h3>
         </div>
         <div class="panel-body">
             <table class="table">

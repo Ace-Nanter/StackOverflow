@@ -7,10 +7,6 @@
 
     <body>
         <div class="container top-margin-50">
-            <g:if test='${flash.message}'>
-                <div class="login_message">${flash.message}</div>
-            </g:if>
-
             <div id="logbox" class="top-margin-50">
                 <form action="${postUrl ?: '/login/authenticate'}" method="POST" id="loginForm" autocomplete="off">
                     <h1><g:message code='login.title.label' default="Account Login"/></h1>
@@ -29,6 +25,9 @@
                         </g:link>
                     </div>
                 </form>
+                <g:if test='${flash.message}'>
+                    <div class="alert alert-danger top-margin-50">${flash.message}</div>
+                </g:if>
             </div>
         </div>
     </body>
