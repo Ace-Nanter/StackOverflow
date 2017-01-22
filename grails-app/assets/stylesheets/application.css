@@ -29,13 +29,6 @@ body {
     white-space: normal;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
-}
-
 h2 {
     margin-top : 1em;
     margin-bottom : 1em;
@@ -57,50 +50,16 @@ h2 {
     background-color : white;
 }
 
-.clock {
-    position: fixed;
-    z-index: 1049;
-    top: 0px;
-    left: auto;
-    height : 50px;
-    background-color: white;
-    color: black;
-    font-size: 1.8em;
-    color: black;
-    text-align: center;
-    font-weight: bold;
-    padding: 10px;
-}
-
-.clickable a {
-    color : black;
-    cursor : pointer;
-}
-
 .top-margin-50 {
     margin-top : 50px;
 }
 
-.square {
-    display: inline-block;
-    width: 1em;
-    height: 1em;
-    border: solid 1px black;
-    margin-left: -1px;
-    cursor:pointer;
+.right-margin-10 {
+    margin-right: 10px;
 }
 
-.square-inactive {
-    display: inline-block;
-    width: 1em;
-    height: 1em;
-    border: dashed 1px #AAAAAA;
-    margin-left: -1px;
-    cursor: initial;
-}
-
-footer {
-    margin-left : auto;
-    margin-right : auto;
-    text-align : center;
+.big-textarea {
+    width: 100%;
+    outline: none;
+    resize: none;
 }

@@ -3,7 +3,7 @@
     <head>
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'question.label', default: 'Question')}" />
-        <title><g:message code="default.show.label" args="[entityName]" /></title>
+        <title>${question.title} - Stack Overflow</title>
     </head>
 
 <body>
@@ -13,7 +13,7 @@
         </div>
 
         <g:if test="${flash.message}">
-            <div class="message" role="status">${flash.message}</div>
+            <div class="alert alert-warning text-center" role="status">${flash.message}</div>
         </g:if>
 
         <div>
@@ -34,7 +34,6 @@
             <g:textField name="text" value="" />
             <g:submitButton name="addAnwser" value="Submit" />
         </g:form>
-
-</div>
+    </div>
 </body>
 </html>

@@ -48,13 +48,13 @@ class QuestionController {
             return
         }
 
-        question.save flush:true
+        question.save(failOnError: true)
         Badge.controlBadges(question.user)?.save()
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'question.label', default: 'Question'), question.id])
-                redirect question
+                redirect controller: 'Question', action: 'index'
             }
             '*' { respond question, [status: CREATED] }
         }
@@ -62,7 +62,6 @@ class QuestionController {
 
     @Transactional
     def upVote(Question question){
-
 
         if (question == null) {
             transactionStatus.setRollbackOnly()
@@ -163,7 +162,7 @@ class QuestionController {
             return
         }
 
-        question.save flush:true
+        question.save(flush: true)
         Badge.controlBadges(question.user)?.save()
 
         request.withFormat {
@@ -177,7 +176,6 @@ class QuestionController {
 
     @Transactional
     def setResolved(Question question) {
-
 
         if (question == null) {
             transactionStatus.setRollbackOnly()

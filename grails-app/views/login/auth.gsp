@@ -1,21 +1,17 @@
 <html>
     <head>
         <meta name="layout" content="${gspLayout ?: 'main'}"/>
-        <title><g:message code='springSecurity.login.title'/></title>
+        <title><g:message code='signin.page.title'/> - Stack Overflow</title>
         <asset:stylesheet src="userRegistration.css.css"/>
     </head>
 
     <body>
         <div class="container top-margin-50">
-            <g:if test='${flash.message}'>
-                <div class="login_message">${flash.message}</div>
-            </g:if>
-
             <div id="logbox" class="top-margin-50">
                 <form action="${postUrl ?: '/login/authenticate'}" method="POST" id="loginForm" autocomplete="off">
                     <h1><g:message code='login.title.label' default="Account Login"/></h1>
 
-                    <input name="${usernameParameter ?: 'username'}" type="text" id="username"
+                    <input name="${usernameParameter ?: 'username'}" type="text" id="username" autofocus="autofocus"
                            class="input pass" placeholder="${message(code: 'login.field.username', default: 'Enter your username')}"/>
 
                     <input name="${passwordParameter ?: 'password'}" type="password" required="required" id="password"
@@ -29,6 +25,9 @@
                         </g:link>
                     </div>
                 </form>
+                <g:if test='${flash.message}'>
+                    <div class="alert alert-danger top-margin-50">${flash.message}</div>
+                </g:if>
             </div>
         </div>
     </body>
