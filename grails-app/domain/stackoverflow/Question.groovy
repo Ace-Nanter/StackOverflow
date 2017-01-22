@@ -3,7 +3,6 @@ package stackoverflow
 class Question extends Post {
 
     String title
-    Integer views
     Boolean resolved
 
     static belongsTo = [user: User]

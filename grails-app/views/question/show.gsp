@@ -34,7 +34,6 @@
             <g:textField name="text" value="" />
             <g:submitButton name="addAnwser" value="Submit" />
         </g:form>
-
-</div>
+    </div>
 </body>
 </html>

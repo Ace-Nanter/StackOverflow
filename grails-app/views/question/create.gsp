@@ -23,14 +23,14 @@
         </ul>
         </g:hasErrors>
 
-        <g:form action="addQuestion">
+        <g:form controller="question" action="addQuestion" method="post">
             <h3 class="text-center top-margin-50">${message(code:'question.label.title', default: 'Question title')}</h3>
             <div class="row text-center top-margin-50">
                 <input name="${titleParameter ?: 'title'}" type="text" autofocus="autofocus" class="text-center big-textarea"
-                    placeholder="${message(code:'question.label.title', default:'Question title')}"/>
+                    placeholder="${message(code:'question.label.title', default:'Question title')}" autocomplete="off"/>
             </div>
             <div class="row top-margin-50">
-                <textarea name="${textParameter ?: 'text'}" class="big-textarea" rows="10"
+                <textarea name="${textParameter ?: 'text'}" class="big-textarea" rows="10" autocomplete="off"
                           placeholder="${message(code:'question.label.text', default: 'Describe your question here...')}"></textarea>
             </div>
 
