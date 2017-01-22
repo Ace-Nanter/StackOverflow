@@ -77,6 +77,7 @@ class AnswerController {
         answer.vote++
 
         answer.user.reputation += User.REPUTATION_COEF
+        Badge.controlBadges(answer.user)
         answer.user.save flush:true
 
         answer.save flush:true
@@ -108,6 +109,7 @@ class AnswerController {
         answer.save flush:true
 
         answer.user.reputation -= User.REPUTATION_COEF
+        Badge.controlBadges(answer.user)
         answer.user.save flush:true
 
 

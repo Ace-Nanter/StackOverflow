@@ -188,4 +188,25 @@ class QuestionControllerSpec extends Specification {
             Question.get(question.id).vote == question.vote
 
     }
+
+    void "Test change text"(){
+        when:"change text is called for a domain instance that doesn't exist"
+        request.contentType = FORM_CONTENT_TYPE
+        request.method = 'PUT'
+        controller.updateText(null,null,null)
+
+        then:"A 404 error is returned"
+        response.redirectedUrl == '/'
+        flash.message != null
+
+        when:"An invalid domain instance is passed to the upVote action"
+        response.reset()
+        populateValidParams(params)
+        def question = new Question(params).save(flush: true)
+        controller.updateText(question, "title test", "test")
+
+        then:"The edit view is rendered again with the invalid instance"
+        Question.get(question.id).text == "test"
+        Question.get(question.id).title == "title test"
+    }
 }

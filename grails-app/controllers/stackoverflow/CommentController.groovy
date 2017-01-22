@@ -81,6 +81,7 @@ class CommentController {
         def idQuestion = comment.answer!=null?comment.answer.question.id:comment.question.id
         comment.vote++
         comment.user.reputation += User.REPUTATION_COEF
+        Badge.controlBadges(comment.user)
         comment.user.save flush: true
 
         comment.save flush:true
@@ -114,6 +115,7 @@ class CommentController {
         def idQuestion = comment.answer!=null?comment.answer.question.id:comment.question.id
         comment.vote--
         comment.user.reputation -= User.REPUTATION_COEF
+        Badge.controlBadges(comment.user)
         comment.user.save flush: true
         comment.save flush:true
 
