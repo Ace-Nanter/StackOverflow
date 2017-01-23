@@ -20,22 +20,42 @@
             <div class="col-xs-1">
             <!-- Part on the right for voting -->
                 <g:form controller="question" action="upVote" method="PUT" resource="${question}" >
-                    <button type="submit">
-                        <span class="glyphicon glyphicon-triangle-top"></span>
-                    </button>
+                    <h3 style="margin : 0px" class="text-center">
+                        <button type="submit" class="btn btn-default">
+                            <span class="glyphicon glyphicon-triangle-top"></span>
+                        </button>
+                    </h3>
                 </g:form>
-                <span class="text-center">${question.vote}</span>     <!-- Display the value -->
+                <!-- Display the value -->
+                <h3 style="margin: 0px" class="text-center">
+                    <span>
+                        ${question.vote}
+                    </span>
+                </h3>
                 <g:form controller="answer" action="downVote" method="PUT" resource="${question}" >
-                    <button type="submit">
-                        <span class="glyphicon glyphicon-triangle-bottom"></span>
-                    </button>
+                    <h3 style="margin: 0px" class="text-center">
+                        <button type="submit" class="btn btn-default">
+                            <span class="glyphicon glyphicon-triangle-bottom"></span>
+                        </button>
+                    </h3>
                 </g:form>
             </div>
             <div class="col-xs-11">
-                <!-- Display of the answer -->
+                <!-- Display of the question -->
                 <p>${question.text}</p>
             </div>
         </div>
+        <!-- Display the user -->
+        <div class="pull-right">
+            <g:link controller="user" action="edit" id="${question.user.id}">${question.user.username}</g:link>
+            <span class="badge">${question.user.reputation}</span><br />
+            ${message(code: 'answer.date.created', default:'Created : ')}<g:formatDate date="${question.created}" format="dd-MM-yyyy HH:mm:ss" /><br />
+            <g:if test="${question.edited != null}">
+                ${message(code: 'answer.date.edited', default:'Edited : ')}<g:formatDate date="${question.edited}" format="dd-MM-yyyy HH:mm:ss" />
+            </g:if>
+        </div>
+
+        <h2 class="top-margin-50">${message(code: 'question.show.answers', default: 'Answers')}</h2>
         <hr/>
         <g:each in="${question.answers}" var="a">
             <tr>

@@ -16,7 +16,6 @@ class QuestionControllerSpec extends Specification {
         params["created"] = new Date()
         params["edited"] = new Date()
         params["title"] = "What is the meaning of life ?"
-        params["views"] = 0
         params["resolved"] = false
         params["user"] = user
     }
