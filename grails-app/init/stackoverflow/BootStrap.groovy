@@ -67,17 +67,13 @@ class BootStrap {
             Comment commentQuest = new Comment(text: "Are you serious ?",
                     vote: 5,
                     created: new Date(),
-                    edited: new Date(),
-                    question: question1,
-                    anwser: null
+                    edited: new Date()
             )
 
             Comment commentAnsw = new Comment(text: "Go back to Google+, faggot",
                     vote: 0,
                     created: new Date(1484651600000),
-                    edited: new Date(1484652600000),
-                    question: null,
-                    anwser: answer1
+                    edited: new Date(1484652600000)
             )
 
             // Question 2
@@ -129,6 +125,9 @@ class BootStrap {
 
             testUser2.addToComments(commentAnsw)
             testUser3.addToComments(commentQuest)
+
+            question1.addToComments(commentQuest)
+            answer1.addToComments(commentAnsw)
 
             tag1.save("failOnError": true)
             tag2.save("failOnError": true)

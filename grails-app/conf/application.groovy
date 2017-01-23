@@ -5,9 +5,9 @@ grails.plugin.springsecurity.userLookup.userDomainClassName = 'stackoverflow.Use
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'stackoverflow.UserRole'
 grails.plugin.springsecurity.authority.className = 'stackoverflow.Role'
 grails.plugin.springsecurity.logout.postOnly=false
+grails.plugin.springsecurity.successHandler.alwaysUseDefault = true
 grails.plugin.springsecurity.successHandler.defaultTargetUrl='/question/index'
 grails.plugin.springsecurity.ui.register.postRegisterUrl = '/question/index'
-
 
 grails.plugin.springsecurity.roleHierarchy = '''
    ROLE_ADMIN > ROLE_USER

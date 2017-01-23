@@ -55,6 +55,18 @@
             </g:if>
         </div>
 
+        <div class="comments">
+            <g:each in="${question.comments}" var="c">
+                <tr>
+                    <td>
+                        <g:render template="/comment/displayComment" model="['comment':c]" />
+                    </td>
+                </tr>
+                <hr />
+            </g:each>
+        </div>
+
+
         <h2 class="top-margin-50">${message(code: 'question.show.answers', default: 'Answers')}</h2>
         <hr/>
         <g:each in="${question.answers}" var="a">
@@ -62,7 +74,18 @@
                 <td>
                     <g:render template="/answer/displayAnswer" model="['answer':a]" />
                 </td>
+
             </tr>
+            <div class="comments">
+                <g:each in="${a.comments}" var="c">
+                    <tr>
+                        <td>
+                            <g:render template="/comment/displayComment" model="['comment':c]" />
+                        </td>
+                    </tr>
+                    <hr />
+                </g:each>
+            </div>
             <hr />
         </g:each>
 

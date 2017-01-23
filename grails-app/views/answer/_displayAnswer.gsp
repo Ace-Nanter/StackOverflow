@@ -29,8 +29,8 @@
         </div>
     </div>
     <div class="pull-right">
-        <g:link controller="user" action="edit" id="${question.user.id}">${question.user.username}</g:link>
-        <span class="badge">${question.user.reputation}</span><br />
+        <g:link controller="user" action="edit" id="${answer.user.id}">${answer.user.username}</g:link>
+        <span class="badge">${answer.user.reputation}</span><br />
         ${message(code: 'answer.date.created', default:'Created : ')}<g:formatDate date="${question.created}" format="dd-MM-yyyy HH:mm:ss" /><br />
         <g:if test="${question.edited != null}">
             ${message(code: 'answer.date.edited', default:'Edited : ')}<g:formatDate date="${question.edited}" format="dd-MM-yyyy HH:mm:ss" />
