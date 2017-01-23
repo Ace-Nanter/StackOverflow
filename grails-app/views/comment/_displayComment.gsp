@@ -1,4 +1,4 @@
-<div class="row block_comment">
+<div class="row">
     <div class="col-xs-1">
         <g:form controller="answer" action="upVote" method="PUT" resource="${comment}" >
             <h4 style="margin : 0px" class="text-center">
@@ -13,7 +13,6 @@
                 ${comment.vote}
             </span>
         </h5>
-
         <g:form controller="answer" action="downVote" method="PUT" resource="${comment}" >
             <h4 style="margin: 0px" class="text-center">
                 <button type="submit" class="btn btn-default">
@@ -41,6 +40,13 @@
         <!-- Edit area -->
         <g:isOwner owner="${comment.user}">
             <input type="button" class="btn btn-primary glyphicon-pencil edit_btn" value="${message(code: 'comment.button.label', default: 'Edit')}" />
+            <g:form method="DELETE" controller="comment" action="delete" style="margin-top: 5px;">
+                <g:hiddenField name="id" value="${comment.id}" />
+                <button type="submit" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-trash"/>
+                    <g:message code="default.button.delete" default="Delete" />
+                </button>
+            </g:form>
         </g:isOwner>
     </div>
 </div>

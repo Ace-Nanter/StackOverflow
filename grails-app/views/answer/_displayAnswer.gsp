@@ -58,12 +58,23 @@
         </button>
     </g:form>
 
-    <div class="text-center top-margin-25">
-        <!-- Edit area -->
+    <div class="text-center top-margin-25 row">
         <g:isOwner owner="${answer.user}">
-            <g:link class="btn btn-primary glyphicon-pencil" action="edit" resource="${this.answer}">
-                <g:message code="answer.button.label" default=" Edit answer " />
-            </g:link>
+            <!-- Edit area -->
+            <div class="col-xs-6">
+                <g:link class="btn btn-primary glyphicon-pencil" action="edit" resource="${this.answer}">
+                    <g:message code="answer.button.label" default=" Edit answer " />
+                </g:link>
+                </div>
+            <div class="col-xs-6">
+                <g:form method="DELETE" controller="answer" action="delete">
+                    <g:hiddenField name="id" value="${answer.id}" />
+                    <button type="submit" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-trash"/>
+                        <g:message code="default.button.delete" default="Delete" />
+                    </button>
+                </g:form>
+            </div>
         </g:isOwner>
     </div>
 
