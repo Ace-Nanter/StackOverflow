@@ -4,7 +4,7 @@ import grails.test.mixin.*
 import spock.lang.*
 
 @TestFor(QuestionController)
-@Mock([User, Post, Question])
+@Mock([User, Post, Question, Tag])
 class QuestionControllerSpec extends Specification {
 
     def populateValidParams(params) {

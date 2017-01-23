@@ -111,7 +111,6 @@ class CommentControllerSpec extends Specification {
             controller.update(null)
 
         then:"A 404 error is returned"
-            response.redirectedUrl == '/comment/index'
             flash.message != null
 
         when:"An invalid domain instance is passed to the update action"
@@ -159,7 +158,6 @@ class CommentControllerSpec extends Specification {
 
         then:"The instance is deleted"
             Comment.count() == 0
-            response.redirectedUrl == '/comment/index'
             flash.message != null
     }
 

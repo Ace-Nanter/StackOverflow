@@ -160,7 +160,6 @@ class AnswerControllerSpec extends Specification {
 
         then:"The instance is deleted"
             Answer.count() == 0
-            response.redirectedUrl == '/answer/index'
             flash.message != null
     }
 
