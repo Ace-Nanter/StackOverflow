@@ -147,6 +147,7 @@ class CommentController {
             return
         }
 
+        def idQuestion = comment.answer!=null?comment.answer.question.id:comment.question.id
         comment.text = text
         comment.edited = new Date()
         comment.save flush:true
@@ -154,7 +155,7 @@ class CommentController {
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'comment.label', default: 'Comment'), comment.id])
-                redirect controller: 'Question', action: 'show', id: comment.question.id
+                redirect controller: 'Question', action: 'show', id: idQuestion
             }
             '*'{ respond comment, [status: OK] }
         }

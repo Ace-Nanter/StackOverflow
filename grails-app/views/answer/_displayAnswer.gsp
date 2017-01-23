@@ -1,3 +1,4 @@
+<div class="editable_post_block answer_edition">
     <div class="row">
         <div class="col-xs-1">
             <!-- Part on the right for voting -->
@@ -24,7 +25,10 @@
         </div>
         <div class="col-xs-11">
             <!-- Display of the answer -->
-            <p>${answer.text}</p>
+            <g:form style="word-wrap: break-word" controller="answer" action="updateText" method="post" resource="${this.answer}" >
+                <textArea class="big-textarea editable_display editable_display_no_border answer_edition" name="text" readonly="readonly" >${answer.text}</textArea>
+                <g:submitButton class="btn_to_display answer_edition hidden" name="editComment" value="${message(code: 'answer.button.label', default: 'Edit')}" />
+            </g:form>
         </div>
     </div>
     <div class="text-right">
@@ -62,10 +66,8 @@
         <g:isOwner owner="${answer.user}">
             <!-- Edit area -->
             <div class="col-xs-6">
-                <g:link class="btn btn-primary glyphicon-pencil" action="edit" resource="${this.answer}">
-                    <g:message code="answer.button.label" default=" Edit answer " />
-                </g:link>
-                </div>
+                <input type="button" class="btn btn-primary glyphicon-pencil edit_btn answer_edition" value="${message(code: 'answer.button.label', default: ' Edit answer ')}" />
+            </div>
             <div class="col-xs-6">
                 <g:form method="DELETE" controller="answer" action="delete">
                     <g:hiddenField name="id" value="${answer.id}" />
@@ -77,4 +79,5 @@
             </div>
         </g:isOwner>
     </div>
+</div>
 

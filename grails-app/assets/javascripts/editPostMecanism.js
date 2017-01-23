@@ -3,18 +3,26 @@
  */
 
 $(document).ready(function(){
-    $(".edit_btn").click(function(){
-        var block_comment = $(this).closest(".block_comment");
-        var submitBtn =block_comment.find(".btn_to_display");
-        var display = block_comment.find(".editable_display");
+    $(".comment_edition.edit_btn").click(function(){
+        toggleEdition($(this),".comment_edition");
+    });
 
-        if(display.attr("readonly")=="readonly"){
-            display.attr("readonly",null)
-                .removeClass("editable_display_no_border");
-        }else{
-            display.attr("readonly","readonly")
-                .addClass("editable_display_no_border")
-        }
-        submitBtn.toggleClass("hidden");
+    $(".answer_edition.edit_btn").click(function(){
+        toggleEdition($(this),".answer_edition");
     });
 });
+
+function toggleEdition (elementBtn, classHTML){
+    var block = elementBtn.closest(classHTML+".editable_post_block");
+    var submitBtn =block.find(classHTML+".btn_to_display");
+    var display = block.find(classHTML+".editable_display");
+
+    if(display.attr("readonly")=="readonly"){
+        display.attr("readonly",null)
+            .removeClass("editable_display_no_border");
+    }else{
+        display.attr("readonly","readonly")
+            .addClass("editable_display_no_border")
+    }
+    submitBtn.toggleClass("hidden");
+}
