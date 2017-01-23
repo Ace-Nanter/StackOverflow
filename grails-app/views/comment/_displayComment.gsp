@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row block_comment">
     <div class="col-xs-1">
         <g:form controller="answer" action="upVote" method="PUT" resource="${comment}" >
             <h4 style="margin : 0px" class="text-center">
@@ -25,7 +25,8 @@
     <div class="col-xs-8">
         <!-- Display of the comment -->
         <g:form style="word-wrap: break-word" controller="comment" action="updateText" method="post" resource="${this.comment}" >
-            <g:textField class="editable_display" name="text" value="${comment.text}" readonly="readonly" />
+           <!-- <g:textField class="big-textarea editable_display editable_display_no_border" value="${comment.text}" name="text" readonly="readonly" /> -->
+            <textArea class="big-textarea editable_display editable_display_no_border" name="text" readonly="readonly" >${comment.text}</textArea>
             <span> - </span>
             <span>
                 <g:link controller="user" action="edit" id="${comment.user.id}">${comment.user.username}</g:link>

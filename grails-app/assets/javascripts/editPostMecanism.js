@@ -3,12 +3,18 @@
  */
 
 $(document).ready(function(){
-    alert("prout");
-    $(".editable_post .edit_btn").click(function(){
-        var submitBtn =$(this).parent(".btn_to_display");
-        var display = $(this).parent(".editable_display");
+    $(".edit_btn").click(function(){
+        var block_comment = $(this).closest(".block_comment");
+        var submitBtn =block_comment.find(".btn_to_display");
+        var display = block_comment.find(".editable_display");
 
-        display.readOnly(!display.readOnly());
+        if(display.attr("readonly")=="readonly"){
+            display.attr("readonly",null)
+                .removeClass("editable_display_no_border");
+        }else{
+            display.attr("readonly","readonly")
+                .addClass("editable_display_no_border")
+        }
         submitBtn.toggleClass("hidden");
     });
 });

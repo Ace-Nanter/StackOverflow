@@ -92,6 +92,10 @@ h2 {
     width: 5%;
 }
 
+.editable_display_no_border{
+    border:none
+}
+
 .hidden {
     display:none;
 }
