@@ -64,16 +64,62 @@ class BootStrap {
                     question: question1
             )
 
-            Comment commentQuest = new Comment(text: "Are you serious ?",
+            Comment commentQuest1 = new Comment(text: "Are you serious ?",
                     vote: 5,
                     created: new Date(),
                     edited: new Date()
             )
 
-            Comment commentAnsw = new Comment(text: "Go back to Google+, faggot",
+            Comment commentQuest2 = new Comment(text: "Are you serious ?",
+                    vote: 5,
+                    created: new Date(),
+                    edited: new Date()
+            )
+
+            Comment commentQuest3 = new Comment(text: "Very long comment to see if it fits or not. " +
+                    "Very long comment to see if it fits or not. Very long comment to see if it fits or not." +
+                    "Very long comment to see if it fits or not. Very long comment to see if it fits or not." +
+                    "Very long comment to see if it fits or not. Very long comment to see if it fits or not." +
+                    "Very long comment to see if it fits or not. Very long comment to see if it fits or not." +
+                    "Very long comment to see if it fits or not. Very long comment to see if it fits or not.",
+                    vote: 5,
+                    created: new Date(),
+                    edited: new Date()
+            )
+
+            Comment commentQuest4 = new Comment(text: "Are you serious ?",
+                    vote: 5,
+                    created: new Date(),
+                    edited: new Date()
+            )
+
+            Comment commentAnsw1 = new Comment(text: "Go back to Google+, faggot",
                     vote: 0,
                     created: new Date(1484651600000),
                     edited: new Date(1484652600000)
+            )
+
+            Comment commentAnsw2 = new Comment(text: "Are you serious ?",
+                    vote: 5,
+                    created: new Date(),
+                    edited: new Date()
+            )
+
+            Comment commentAnsw3 = new Comment(text: "Very long comment to see if it fits or not. " +
+                    "Very long comment to see if it fits or not. Very long comment to see if it fits or not." +
+                    "Very long comment to see if it fits or not. Very long comment to see if it fits or not." +
+                    "Very long comment to see if it fits or not. Very long comment to see if it fits or not." +
+                    "Very long comment to see if it fits or not. Very long comment to see if it fits or not." +
+                    "Very long comment to see if it fits or not. Very long comment to see if it fits or not.",
+                    vote: 5,
+                    created: new Date(),
+                    edited: new Date()
+            )
+
+            Comment commentAnsw4 = new Comment(text: "Are you serious ?",
+                    vote: 5,
+                    created: new Date(),
+                    edited: new Date()
             )
 
             // Question 2
@@ -123,11 +169,24 @@ class BootStrap {
             testUser3.addToAnswers(answer3)
             testUser1.addToAnswers(answer4)
 
-            testUser2.addToComments(commentAnsw)
-            testUser3.addToComments(commentQuest)
+            testUser2.addToComments(commentAnsw1)
+            testUser2.addToComments(commentAnsw2)
+            testUser2.addToComments(commentAnsw3)
+            testUser2.addToComments(commentAnsw4)
 
-            question1.addToComments(commentQuest)
-            answer1.addToComments(commentAnsw)
+            testUser3.addToComments(commentQuest1)
+            testUser3.addToComments(commentQuest2)
+            testUser3.addToComments(commentQuest3)
+            testUser3.addToComments(commentQuest4)
+
+            question1.addToComments(commentQuest1)
+            question1.addToComments(commentQuest2)
+            question1.addToComments(commentQuest3)
+            question1.addToComments(commentQuest4)
+            answer1.addToComments(commentAnsw1)
+            answer1.addToComments(commentAnsw2)
+            answer1.addToComments(commentAnsw3)
+            answer1.addToComments(commentAnsw4)
 
             tag1.save("failOnError": true)
             tag2.save("failOnError": true)
@@ -142,8 +201,14 @@ class BootStrap {
             answer4.save("failOnError": true)
             answer3.save("failOnError": true)
 
-            commentQuest.save("failOnError": true)
-            commentAnsw.save("failOnError": true)
+            commentQuest1.save("failOnError": true)
+            commentQuest2.save("failOnError": true)
+            commentQuest3.save("failOnError": true)
+            commentQuest4.save("failOnError": true)
+            commentAnsw1.save("failOnError": true)
+            commentAnsw2.save("failOnError": true)
+            commentAnsw3.save("failOnError": true)
+            commentAnsw4.save("failOnError": true)
 
             Badge.controlBadges(testUser1)
             Badge.controlBadges(testUser2)
