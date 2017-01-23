@@ -224,12 +224,13 @@ class CommentController {
             return
         }
 
+        def questionId = comment.answer!=null? comment.answer.question.id:comment.question.id
         comment.delete flush:true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'comment.label', default: 'Comment'), comment.id])
-                redirect action:"index", method:"GET"
+                redirect action:"show", controller: "question", id: questionId, method:"GET"
             }
             '*'{ render status: NO_CONTENT }
         }

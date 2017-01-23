@@ -212,12 +212,13 @@ class AnswerController {
             return
         }
 
+        def questionId = answer.question.id
         answer.delete flush:true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'answer.label', default: 'Answer'), answer.id])
-                redirect action:"index", method:"GET"
+                redirect controller: "question", action:"show", id: questionId, method:"GET"
             }
             '*'{ render status: NO_CONTENT }
         }
