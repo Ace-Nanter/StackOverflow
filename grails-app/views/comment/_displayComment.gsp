@@ -1,4 +1,4 @@
-<div class="row editable_post_block comment_edition">
+<div class="row block_comment">
     <div class="col-xs-1">
         <g:form controller="answer" action="upVote" method="PUT" resource="${comment}" >
             <h4 style="margin : 0px" class="text-center">
@@ -26,7 +26,6 @@
         <g:form style="word-wrap: break-word" controller="comment" action="updateText" method="post" resource="${this.comment}" >
            <!-- <g:textField class="big-textarea editable_display editable_display_no_border" value="${comment.text}" name="text" readonly="readonly" /> -->
             <textArea class="big-textarea editable_display editable_display_no_border comment_edition" name="text" readonly="readonly" >${comment.text}</textArea>
-            <span> - </span>
             <span>
                 <g:link controller="user" action="edit" id="${comment.user.id}">${comment.user.username}</g:link>
                 <span> | </span>
@@ -39,7 +38,10 @@
     <div class="text-right">
         <!-- Edit area -->
         <g:isOwner owner="${comment.user}">
-            <input type="button" class="btn btn-primary glyphicon-pencil edit_btn comment_edition" value="${message(code: 'comment.button.label', default: 'Edit')}" />
+            <div class="btn btn-primary edit_btn comment_edition">
+                <span class="glyphicon glyphicon-pencil" />
+                <g:message code="comment.button.label" default="Edit" />
+            </div>
             <g:form method="DELETE" controller="comment" action="delete" style="margin-top: 5px;">
                 <g:hiddenField name="id" value="${comment.id}" />
                 <button type="submit" class="btn btn-danger">
