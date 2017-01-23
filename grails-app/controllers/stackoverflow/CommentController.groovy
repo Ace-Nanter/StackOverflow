@@ -27,15 +27,20 @@ class CommentController {
     @Secured(['ROLE_USER'])
     @Transactional
     def addComment(){
-        def idQuestion = params.idAnswer!=null?Answer.get((int)params.idAnswer).question.id:params.idQuestion
+        def idQuestion = params.idAnswer!=null?Answer.get(params.idAnswer).question.id:params.idQuestion
+
         Comment comment = new Comment(
                 text: params.text,
                 vote: 0,
                 created: new Date(),
-                question: params.idQuestion!=null?Question.get((int)params.idQuestion):null,
-                answer: params.idAnswer!=null?Answer.get((int)params.idAnswer):null,
                 user: (User)getAuthenticatedUser()
         )
+
+        if(params.idAnswer!=null){
+            comment.setAnswer(Answer.get(params.idAnswer))
+        }else{
+            comment.setQuestion(Question.get(params.idQuestion))
+        }
 
         if (comment == null) {
             transactionStatus.setRollbackOnly()

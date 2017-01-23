@@ -66,6 +66,11 @@
             </g:each>
         </div>
 
+        <g:form controller="comment" action="addComment" method="post">
+            <g:hiddenField name="idQuestion" value="${question.id}" />
+            <g:textField name="text" value="" />
+            <g:submitButton name="addComment" value="${message(code: 'comment.button.add.label', default: 'Add comment')}" />
+        </g:form>
 
         <h2 class="top-margin-50">${message(code: 'question.show.answers', default: 'Answers')}</h2>
         <hr/>
@@ -86,13 +91,20 @@
                     <hr />
                 </g:each>
             </div>
+
+            <g:form controller="comment" action="addComment" method="post">
+                <g:hiddenField name="idAnswer" value="${a.id}" />
+                <g:textField name="text" value="" />
+                <g:submitButton name="addComment" value="${message(code: 'comment.button.add.label', default: 'Add comment')}" />
+            </g:form>
+
             <hr />
         </g:each>
 
         <g:form controller="answer" action="addAnswer" method="post">
             <g:hiddenField name="idQuestion" value="${question.id}" />
             <g:textField name="text" value="" />
-            <g:submitButton name="addAnwser" value="Submit" />
+            <g:submitButton name="addAnwser" value="${message(code: 'answer.button.add.label', default: 'Add answer')}" />
         </g:form>
     </div>
 </body>
