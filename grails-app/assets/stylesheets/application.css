@@ -91,3 +91,11 @@ h2 {
     margin-left: -5%;
     width: 5%;
 }
+
+.editable_display_no_border{
+    border:none
+}
+
+.hidden {
+    display:none;
+}
