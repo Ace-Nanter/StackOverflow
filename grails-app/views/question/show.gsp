@@ -4,7 +4,6 @@
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'question.label', default: 'Question')}" />
         <title>${question.title} - Stack Overflow</title>
-        <g:javascript src="editPostMecanism.js" />
     </head>
 
 <body>
