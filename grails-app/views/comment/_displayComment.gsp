@@ -1,4 +1,4 @@
-<div class="row block_comment">
+<div class="row editable_post_block comment_edition">
     <div class="col-xs-1">
         <g:form controller="answer" action="upVote" method="PUT" resource="${comment}" >
             <h4 style="margin : 0px" class="text-center">
