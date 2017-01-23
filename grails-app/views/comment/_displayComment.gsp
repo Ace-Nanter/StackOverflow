@@ -36,9 +36,17 @@
     <div class="text-right">
         <!-- Edit area -->
         <g:isOwner owner="${comment.user}">
-                <g:link class="btn btn-primary glyphicon-pencil" controller="comment" action="edit" resource="${this.comment}">
-                    <g:message code="comment.button.label" default="Edit" />
-                </g:link>
+            <g:link controller="comment" action="edit" resource="${this.comment}" class="btn btn-primary">
+                <span class="glyphicon glyphicon-pencil"/>
+                <g:message code="comment.button.label" default="Edit" />
+            </g:link>
+            <g:form method="DELETE" controller="comment" action="delete" style="margin-top: 5px;">
+                <g:hiddenField name="id" value="${comment.id}" />
+                <button type="submit" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-trash"/>
+                    <g:message code="default.button.delete" default="Delete" />
+                </button>
+            </g:form>
         </g:isOwner>
     </div>
 </div>

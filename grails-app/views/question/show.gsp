@@ -12,9 +12,13 @@
             <h1 class="text-center">
                 ${question.title}
                 <g:if test="${question.resolved}">
-                    <label class="label label-success">
-                        <span class="glyphicon glyphicon-ok"/>
-                    </label>
+                    <br />
+                    <h3 class="text-center top-margin-50">
+                        <label class="label label-success">
+                            <g:message code="question.title.resolved" default="Resolved " />
+                            <span class="glyphicon glyphicon-ok"/>
+                        </label>
+                    </h3>
                 </g:if>
             </h1>
 
@@ -112,7 +116,7 @@
                     <g:hiddenField name="idQuestion" value="${question.id}" />
                     <button type="submit" class="btn btn-success">
                         <span class="glyphicon glyphicon-ok"/>
-                        <label>${message(code: 'question.button.solved', default: 'Set question as solved')}</label>
+                        <g:message code="question.button.solved" default="Set question as solved" />
                         <span class="glyphicon glyphicon-ok"/>
                     </button>
                 </g:form>
