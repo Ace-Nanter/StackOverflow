@@ -9,7 +9,15 @@
 <body>
     <div>
         <div class="jumbotron">
-            <h1 class="text-center">${question.title}</h1>
+            <h1 class="text-center">
+                ${question.title}
+                <g:if test="${question.resolved}">
+                    <label class="label label-success">
+                        <span class="glyphicon glyphicon-ok"/>
+                    </label>
+                </g:if>
+            </h1>
+
         </div>
 
         <g:if test="${flash.message}">
@@ -96,6 +104,20 @@
                 <span class="glyphicon glyphicon-plus"/>
             </button>
         </g:form>
+
+        <!-- Question solved -->
+        <g:isOwner owner="${question.user}">
+            <div class="top-margin-50 text-center">
+                <g:form controller="question" action="setResolved" method="PUT" resource="${question}" >
+                    <g:hiddenField name="idQuestion" value="${question.id}" />
+                    <button type="submit" class="btn btn-success">
+                        <span class="glyphicon glyphicon-ok"/>
+                        <label>${message(code: 'question.button.solved', default: 'Set question as solved')}</label>
+                        <span class="glyphicon glyphicon-ok"/>
+                    </button>
+                </g:form>
+            </div>
+        </g:isOwner>
     </div>
 </body>
 </html>

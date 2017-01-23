@@ -33,6 +33,15 @@
                     <tbody>
                         <g:each in="${questionList}" var="q">
                             <tr>
+                                <td class="text">
+                                    <g:if test="${q.resolved}">
+                                        <h4>
+                                            <label class="label label-success">
+                                                <span class="glyphicon glyphicon-ok"/>
+                                            </label>
+                                        </h4>
+                                    </g:if>
+                                </td>
                                 <td class="text-center">
                                     <h4><strong>${q.vote}</strong></h4>
                                 </td>
