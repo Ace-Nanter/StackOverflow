@@ -54,6 +54,11 @@ h2 {
     margin-top : 50px;
 }
 
+.top-margin-25 {
+    margin-top : 25px;
+}
+
+
 .right-margin-10 {
     margin-right: 10px;
 }
@@ -66,12 +71,25 @@ h2 {
 
 /* comments */
 .comments{
+    margin-top: 25px;
     font-size: smaller;
     padding-left: 5%;
 }
 
 .comments .btn{
     padding: 0px;
+}
+
+.add-comment[type="text"] {
+    margin-left: 5%;
+    padding-left : 10px;
+    width: 90%;
+    padding-right: 40px;
+}
+
+.add-comment[type="submit"] {
+    margin-left: -5%;
+    width: 5%;
 }
 
 .hidden {

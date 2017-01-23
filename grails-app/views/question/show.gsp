@@ -10,14 +10,22 @@
 <body>
     <div>
         <div class="jumbotron">
-            <h1 class="text-center">${question.title}</h1>
+            <h1 class="text-center">
+                ${question.title}
+                <g:if test="${question.resolved}">
+                    <label class="label label-success">
+                        <span class="glyphicon glyphicon-ok"/>
+                    </label>
+                </g:if>
+            </h1>
+
         </div>
 
         <g:if test="${flash.message}">
             <div class="alert alert-warning text-center" role="status">${flash.message}</div>
         </g:if>
 
-        <div class="row">
+        <div class="row top-margin-50">
             <div class="col-xs-1">
             <!-- Part on the right for voting -->
                 <g:form controller="question" action="upVote" method="PUT" resource="${question}" >
@@ -47,7 +55,7 @@
             </div>
         </div>
         <!-- Display the user -->
-        <div class="pull-right">
+        <div class="text-right">
             <g:link controller="user" action="edit" id="${question.user.id}">${question.user.username}</g:link>
             <span class="badge">${question.user.reputation}</span><br />
             ${message(code: 'answer.date.created', default:'Created : ')}<g:formatDate date="${question.created}" format="dd-MM-yyyy HH:mm:ss" /><br />
@@ -67,10 +75,13 @@
             </g:each>
         </div>
 
-        <g:form controller="comment" action="addComment" method="post">
+        <g:form controller="comment" action="addComment" method="post" >
             <g:hiddenField name="idQuestion" value="${question.id}" />
-            <g:textField name="text" value="" />
-            <g:submitButton name="addComment" value="${message(code: 'comment.button.add.label', default: 'Add comment')}" />
+            <g:textField name="text" value="" class="add-comment"
+                placeholder="${message(code: 'question.create.comment', default: 'Add a new comment...')}" />
+            <button type="submit" class="btn btn-success add-comment">
+                <span class="glyphicon glyphicon-plus"/>
+            </button>
         </g:form>
 
         <h2 class="top-margin-50">${message(code: 'question.show.answers', default: 'Answers')}</h2>
@@ -82,31 +93,32 @@
                 </td>
 
             </tr>
-            <div class="comments">
-                <g:each in="${a.comments}" var="c">
-                    <tr>
-                        <td>
-                            <g:render template="/comment/displayComment" model="['comment':c]" />
-                        </td>
-                    </tr>
-                    <hr />
-                </g:each>
-            </div>
-
-            <g:form controller="comment" action="addComment" method="post">
-                <g:hiddenField name="idAnswer" value="${a.id}" />
-                <g:textField name="text" value="" />
-                <g:submitButton name="addComment" value="${message(code: 'comment.button.add.label', default: 'Add comment')}" />
-            </g:form>
-
             <hr />
         </g:each>
 
-        <g:form controller="answer" action="addAnswer" method="post">
+        <!-- Add answer -->
+        <g:form controller="answer" action="addAnswer" method="post" >
             <g:hiddenField name="idQuestion" value="${question.id}" />
-            <g:textField name="text" value="" />
-            <g:submitButton name="addAnwser" value="${message(code: 'answer.button.add.label', default: 'Add answer')}" />
+            <g:textField name="text" value="" class="add-comment"
+                 placeholder="${message(code: 'question.create.answer', default: 'Add a new answer...')}" />
+            <button type="submit" class="btn btn-success add-comment">
+                <span class="glyphicon glyphicon-plus"/>
+            </button>
         </g:form>
+
+        <!-- Question solved -->
+        <g:isOwner owner="${question.user}">
+            <div class="top-margin-50 text-center">
+                <g:form controller="question" action="setResolved" method="PUT" resource="${question}" >
+                    <g:hiddenField name="idQuestion" value="${question.id}" />
+                    <button type="submit" class="btn btn-success">
+                        <span class="glyphicon glyphicon-ok"/>
+                        <label>${message(code: 'question.button.solved', default: 'Set question as solved')}</label>
+                        <span class="glyphicon glyphicon-ok"/>
+                    </button>
+                </g:form>
+            </div>
+        </g:isOwner>
     </div>
 </body>
 </html>

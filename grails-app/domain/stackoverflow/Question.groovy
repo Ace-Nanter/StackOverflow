@@ -20,5 +20,6 @@ class Question extends Post {
 
     static mapping = {
         answers order: 'desc', sort: 'vote'
+        comments order: 'asc', sort: 'created'
     }
 }

@@ -9,4 +9,8 @@ class Answer extends Post {
     static constraints = {
         comments nullable:true
     }
+
+    static mapping = {
+        comments order: 'asc', sort: 'created'
+    }
 }
