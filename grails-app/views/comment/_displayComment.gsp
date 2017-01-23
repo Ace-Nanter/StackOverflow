@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row editable_post">
     <div class="col-xs-1">
         <g:form controller="answer" action="upVote" method="PUT" resource="${comment}" >
             <h3 style="margin : 0px" class="text-center">
@@ -24,22 +24,22 @@
     </div>
     <div class="col-xs-5">
         <!-- Display of the comment -->
-        <p>
-            ${comment.text} -
+        <g:form controller="comment" action="updateText" method="post" resource="${this.comment}" >
+            <g:textField class="editable_display" name="text" value="${comment.text}" readonly="readonly" />
+            <span> - </span>
             <span>
                 <g:link controller="user" action="edit" id="${comment.user.id}">${comment.user.username}</g:link>
                 <span> | </span>
                 <g:formatDate date="${question.edited}" format="dd-MM-yyyy HH:mm:ss" />
             </span>
-        </p>
+            <g:submitButton class="btn_to_display hidden" name="editComment" value="${message(code: 'comment.button.label', default: 'Edit')}" />
+        </g:form>
     </div>
 
     <div class="col-xs-1">
         <!-- Edit area -->
         <g:isOwner owner="${comment.user}">
-            <g:link class="btn btn-primary glyphicon-pencil" controller="comment" action="edit" resource="${this.comment}">
-                <g:message code="comment.button.label" default=" Edit" />
-            </g:link>
+            <input type="button" class="btn btn-primary glyphicon-pencil edit_btn" value="${message(code: 'comment.button.label', default: 'Edit')}" />
         </g:isOwner>
     </div>
 </div>

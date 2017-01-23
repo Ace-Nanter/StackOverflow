@@ -73,3 +73,7 @@ h2 {
 .comments .btn{
     padding: 0px;
 }
+
+.hidden {
+    display:none;
+}
