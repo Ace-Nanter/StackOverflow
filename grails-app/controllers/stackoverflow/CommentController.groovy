@@ -10,11 +10,6 @@ class CommentController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Comment.list(params), model:[commentCount: Comment.count()]
-    }
-
     def show(Comment comment) {
         respond comment
     }

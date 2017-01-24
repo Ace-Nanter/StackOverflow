@@ -29,16 +29,6 @@ class AnswerControllerSpec extends Specification {
         params["question"] = question
     }
 
-    void "Test the index action returns the correct model"() {
-
-        when:"The index action is executed"
-            controller.index()
-
-        then:"The model is correct"
-            !model.answerList
-            model.answerCount == 0
-    }
-
     void "Test the create action returns the correct model"() {
         when:"The create action is executed"
             controller.create()

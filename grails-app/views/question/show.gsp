@@ -102,9 +102,9 @@
         <!-- Add answer -->
         <g:form controller="answer" action="addAnswer" method="post" >
             <g:hiddenField name="idQuestion" value="${question.id}" />
-            <g:textField name="text" value="" class="add-comment"
+            <g:textField name="text" value="" class="add-answer"
                  placeholder="${message(code: 'question.create.answer', default: 'Add a new answer...')}" />
-            <button type="submit" class="btn btn-success add-comment">
+            <button type="submit" class="btn btn-success add-answer">
                 <span class="glyphicon glyphicon-plus"/>
             </button>
         </g:form>
