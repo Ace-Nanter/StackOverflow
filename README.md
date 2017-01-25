@@ -1,22 +1,17 @@
 # StackOverflow
-Creating a StackOverflow-like forum, using Grails technologies.
+The goal of this project is to design an aplication using Grails framework.
+The application should implement features similar to StackOverflow ones.
 
-## Security plugin for grails :
- - Spring security : http://grails.org/plugin/spring-security-core
- - Nimble : https://grails.org/plugin/nimble (non utilisé)
+## Keywords
+- StackOverflow
+- Grails
+- Groovy
+- Java
+- HTML5
+- CSS3
+- Javascript
 
-## IntelliJ IDE
+## Plugins
 
- - Link for downloading : https://www.jetbrains.com/idea/#chooseYourEdition (choose Ultimate)
- - Link for getting a student license : https://www.jetbrains.com/student/
- 
-## Travis integration
-
- - Add repository : ppa:gradle/grails
- - apt-get update
- - apt-get install grails-[version]
-
-
-    //compile "org.grails.plugins:hibernate5"
-    compile "org.hibernate:hibernate-core:5.1.2.Final"
-    compile "org.hibernate:hibernate-ehcache:5.1.2.Final"
+- Spring Security Core
+- Spring Security UI
