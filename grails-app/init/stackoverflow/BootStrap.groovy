@@ -7,6 +7,7 @@ class BootStrap {
     def init = { servletContext ->
 
         Badge.createAllBadge()
+        Feature.createAllFeatures()
 
         def adminRole = new Role(authority: 'ROLE_ADMIN').save()
         def userRole = new Role(authority: 'ROLE_USER').save()
