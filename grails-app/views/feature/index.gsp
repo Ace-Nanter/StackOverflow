@@ -18,7 +18,7 @@
             <g:each in="${featureList}" var="f">
                 <tr>
                     <td class="text-center">
-                        <h4><g:link action="show" id="${f.id}">${f.name}</g:link></h4>
+                        <h4>${f.name}</h4>
                     </td>
                      <td>
                         <sec:ifAllGranted roles="ROLE_ADMIN">

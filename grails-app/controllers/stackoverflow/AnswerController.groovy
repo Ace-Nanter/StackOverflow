@@ -12,7 +12,11 @@ class AnswerController {
 
     @Secured(['ROLE_ANONYMOUS'])
     def show(Answer answer) {
-        respond answer
+        if(Feature.findByName("Answer").getEnable()) {
+            respond answer
+        } else {
+            render status: 503
+        }
     }
 
     def create() {
@@ -21,125 +25,142 @@ class AnswerController {
 
     @Transactional
     def addAnswer(){
-        Answer answer = new Answer(
-                text: params.text,
-                vote: 0,
-                created: new Date(),
-                question: Question.get(params.idQuestion),
-                user: (User)getAuthenticatedUser()
-        )
+        if(Feature.findByName("Answer").getEnable()) {
+            Answer answer = new Answer(
+                    text: params.text,
+                    vote: 0,
+                    created: new Date(),
+                    question: Question.get(params.idQuestion),
+                    user: (User)getAuthenticatedUser()
+            )
 
-        if (answer == null) {
-            transactionStatus.setRollbackOnly()
-            notFound()
-            return
-        }
-
-        if (answer.hasErrors()) {
-            transactionStatus.setRollbackOnly()
-            respond answer.errors, view:'create'
-            return
-        }
-
-        answer.save flush:true
-
-        Badge.controlBadges((User)getAuthenticatedUser())?.save()
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'answer.label', default: 'Answer'), answer.id])
-                redirect controller: 'Question', action: 'show', id: answer.question.id
+            if (answer == null) {
+                transactionStatus.setRollbackOnly()
+                notFound()
+                return
             }
-            '*' { respond answer, [status: CREATED] }
+
+            if (answer.hasErrors()) {
+                transactionStatus.setRollbackOnly()
+                respond answer.errors, view:'create'
+                return
+            }
+
+            answer.save flush:true
+
+            Badge.controlBadges((User)getAuthenticatedUser())?.save()
+
+            request.withFormat {
+                form multipartForm {
+                    flash.message = message(code: 'default.created.message', args: [message(code: 'answer.label', default: 'Answer'), answer.id])
+                    redirect controller: 'Question', action: 'show', id: answer.question.id
+                }
+                '*' { respond answer, [status: CREATED] }
+            }
+        } else {
+            render status: 503
         }
     }
 
     @Transactional
     def upVote(Answer answer){
-        if (answer == null) {
-            transactionStatus.setRollbackOnly()
-            notFound()
-            return
-        }
-
-        if (answer.hasErrors()) {
-            transactionStatus.setRollbackOnly()
-            respond answer.errors, view:'edit'
-            return
-        }
-
-        answer.vote++
-
-        answer.user.reputation += User.REPUTATION_COEF
-        Badge.controlBadges(answer.user)
-        answer.user.save flush:true
-
-        answer.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'answer.label', default: 'Answer'), answer.id])
-                redirect controller: 'Question', action: 'show', id: answer.question.id
+        if(Feature.findByName("Answer").getEnable() && Feature.findByName("Vote").getEnable()) {
+            if (answer == null) {
+                transactionStatus.setRollbackOnly()
+                notFound()
+                return
             }
-            '*'{ respond answer, [status: OK] }
+
+            if (answer.hasErrors()) {
+                transactionStatus.setRollbackOnly()
+                respond answer.errors, view:'edit'
+                return
+            }
+
+            answer.vote++
+
+            answer.user.reputation += User.REPUTATION_COEF
+            Badge.controlBadges(answer.user)
+            answer.user.save flush:true
+
+            answer.save flush:true
+
+            request.withFormat {
+                form multipartForm {
+                    flash.message = message(code: 'default.updated.message', args: [message(code: 'answer.label', default: 'Answer'), answer.id])
+                    redirect controller: 'Question', action: 'show', id: answer.question.id
+                }
+                '*'{ respond answer, [status: OK] }
+            }
+        } else {
+            render status: 503
         }
     }
 
     @Transactional
     def downVote(Answer answer) {
-        if (answer == null) {
-            transactionStatus.setRollbackOnly()
-            notFound()
-            return
-        }
+        if(Feature.findByName("Answer").getEnable() && Feature.findByName("Vote").getEnable()) {
 
-        if (answer.hasErrors()) {
-            transactionStatus.setRollbackOnly()
-            respond answer.errors, view:'edit'
-            return
-        }
-
-        answer.vote--
-        answer.save flush:true
-
-        answer.user.reputation -= User.REPUTATION_COEF
-        Badge.controlBadges(answer.user)
-        answer.user.save flush:true
-
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'answer.label', default: 'Answer'), answer.id])
-                redirect controller: 'Question', action: 'show', id: answer.question.id
+            if (answer == null) {
+                transactionStatus.setRollbackOnly()
+                notFound()
+                return
             }
-            '*'{ respond answer, [status: OK] }
+
+            if (answer.hasErrors()) {
+                transactionStatus.setRollbackOnly()
+                respond answer.errors, view:'edit'
+                return
+            }
+
+            answer.vote--
+            answer.save flush:true
+
+            answer.user.reputation -= User.REPUTATION_COEF
+            Badge.controlBadges(answer.user)
+            answer.user.save flush:true
+
+
+            request.withFormat {
+                form multipartForm {
+                    flash.message = message(code: 'default.updated.message', args: [message(code: 'answer.label', default: 'Answer'), answer.id])
+                    redirect controller: 'Question', action: 'show', id: answer.question.id
+                }
+                '*'{ respond answer, [status: OK] }
+            }
+        } else {
+            render status: 503
         }
     }
 
     @Transactional
     def updateText(Answer answer, String text) {
-        if (answer == null) {
-            transactionStatus.setRollbackOnly()
-            notFound()
-            return
-        }
-
-        if (answer.hasErrors()) {
-            transactionStatus.setRollbackOnly()
-            respond answer.errors, view:'edit'
-            return
-        }
-
-        answer.text = text
-        answer.edited = new Date()
-        answer.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'answer.label', default: 'Answer'), answer.id])
-                redirect controller: 'Question', action: 'show', id: answer.question.id
+        if(Feature.findByName("Answer").getEnable()) {
+            if (answer == null) {
+                transactionStatus.setRollbackOnly()
+                notFound()
+                return
             }
-            '*'{ respond answer, [status: OK] }
+
+            if (answer.hasErrors()) {
+                transactionStatus.setRollbackOnly()
+                respond answer.errors, view:'edit'
+                return
+            }
+
+            answer.text = text
+            answer.edited = new Date()
+            answer.save flush:true
+
+            request.withFormat {
+                form multipartForm {
+                    flash.message = message(code: 'default.updated.message', args: [message(code: 'answer.label', default: 'Answer'), answer.id])
+                    redirect controller: 'Question', action: 'show', id: answer.question.id
+                }
+                '*'{ respond answer, [status: OK] }
+            }
+        } else {
+            render status: 503
         }
     }
 
@@ -199,22 +220,27 @@ class AnswerController {
 
     @Transactional
     def delete(Answer answer) {
+        if(Feature.findByName("Answer").getEnable()) {
 
-        if (answer == null) {
-            transactionStatus.setRollbackOnly()
-            notFound()
-            return
-        }
-
-        def questionId = answer.question.id
-        answer.delete flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'answer.label', default: 'Answer'), answer.id])
-                redirect controller: "question", action:"show", id: questionId, method:"GET"
+            if (answer == null) {
+                transactionStatus.setRollbackOnly()
+                notFound()
+                return
             }
-            '*'{ render status: NO_CONTENT }
+
+            def questionId = answer.question.id
+            answer.delete flush:true
+
+            request.withFormat {
+                form multipartForm {
+                    flash.message = message(code: 'default.deleted.message', args: [message(code: 'answer.label', default: 'Answer'), answer.id])
+                    redirect controller: "question", action:"show", id: questionId, method:"GET"
+                }
+                '*'{ render status: NO_CONTENT }
+            }
+
+        } else {
+            render status: 503
         }
     }
 

@@ -31,7 +31,7 @@
                         <g:link class="navbar-brand" url="/login">${message(code: 'menu.user.signin', default: 'Sign in')}</g:link>
                     </sec:ifNotLoggedIn>
                     <sec:ifLoggedIn>
-                        <g:link class="navbar-brand" url="/user/edit/${sec.loggedInUserInfo(field: 'id')}">
+                        <g:link class="navbar-brand" url="/user/edit_/${sec.loggedInUserInfo(field: 'id')}">
                             <sec:username/>
                         </g:link>
                         <g:link class="navbar-brand" url="/logout">${message(code: 'menu.user.signout', default: 'Sign out')}</g:link>

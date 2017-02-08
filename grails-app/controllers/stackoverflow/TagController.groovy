@@ -11,9 +11,12 @@ class TagController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-
     def show(Tag tag) {
-        respond tag
+        if(Feature.findByName("Tag").getEnable()) {
+            respond tag
+        } else {
+            render status: 503
+        }
     }
 
     @Transactional
